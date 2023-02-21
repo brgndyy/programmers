@@ -1,0 +1,11 @@
+function solution(common) {
+  var answer = 0;
+  if (common[2] % common[1] === 0) {
+    let num = common[2] / common[1];
+    answer = common[common.length - 1] * num;
+  } else {
+    let num = common[2] - common[1];
+    answer = common[common.length - 1] + num;
+  }
+  return answer;
+}
