@@ -15,3 +15,9 @@ function solution(array) {
 }
 
 console.log(solution(array));
+
+// 다른 사람 풀이
+
+function solution(array) {
+  return array.join("").split("7").length - 1;
+}
