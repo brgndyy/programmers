@@ -13,3 +13,7 @@ function solution(n, numlist) {
 }
 
 console.log(solution(n, numlist));
+
+// function solution(n, numlist) {
+//     return numlist.filter(num => num % n === 0);
+// }
