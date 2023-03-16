@@ -1,20 +1,22 @@
-const i = 1;
-const j = 13;
-const k = 1;
+const i = 10;
+const j = 50;
+const k = 5;
 
 function solution(i, j, k) {
   let arr = [];
   var answer = 0;
 
   for (let a = i; a <= j; a++) {
-    arr.push(a);
+    arr.push(a.toString());
   }
 
-  for (let i = 0; i < arr.length; i++) {
-    let iToString = i.toString();
-    let arrToString = arr[i].toString();
-    if (arrToString.includes(iToString)) {
-      answer++;
+  for (let b = 0; b < arr.length; b++) {
+    let num = arr[b].split("");
+
+    for (let c = 0; c < num.length; c++) {
+      if (Number(num[c]) === k) {
+        answer++;
+      }
     }
   }
 
@@ -22,3 +24,12 @@ function solution(i, j, k) {
 }
 
 console.log(solution(i, j, k));
+
+// function solution(i, j, k) {
+//   let a ='';
+//   for(i;i<=j;i++){
+//       a += i;
+//   }
+
+//   return a.split(k).length-1;
+// }
