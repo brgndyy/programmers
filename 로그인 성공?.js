@@ -6,16 +6,30 @@ const db = [
 ];
 
 function solution(id_pw, db) {
+  let answer = "";
   const [id, pw] = id_pw;
+  const idArr = [];
+  const pwArr = [];
 
   for (let i = 0; i < db.length; i++) {
-    if (id === db[i][0] && pw === db[i][1]) {
-      return "login";
-    } else if (id === db[i][0] && pw !== db[i][1]) {
-      return "wrong pw";
-    } else {
-      return "fail";
-    }
+    idArr.push(db[i][0]);
+    pwArr.push(db[i][1]);
+  }
+
+  if (
+    idArr.includes(id) &&
+    pwArr.includes(pw) &&
+    idArr.indexOf(id) === pwArr.indexOf(pw)
+  ) {
+    return "login";
+  } else if (
+    idArr.includes(id) &&
+    pwArr.includes(pw) &&
+    idArr.indexOf(id) !== pwArr.indexOf(pw)
+  ) {
+    return "wrong pw";
+  } else {
+    return "fail";
   }
 }
 
