@@ -1,36 +1,35 @@
-const id_pw = ["meosseugi", "1234"];
+const id_pw = ["programmer01", "15789"];
 const db = [
-  ["rardss", "123"],
-  ["yyoom", "1234"],
-  ["meosseugi", "1234"],
+  ["programmer02", "111111"],
+  ["programmer00", "134"],
+  ["programmer01", "1145"],
 ];
 
 function solution(id_pw, db) {
-  let answer = "";
-  const [id, pw] = id_pw;
-  const idArr = [];
-  const pwArr = [];
+  var answer = "";
 
   for (let i = 0; i < db.length; i++) {
-    idArr.push(db[i][0]);
-    pwArr.push(db[i][1]);
+    if (id_pw[0] === db[i][0] && id_pw[1] === db[i][1]) {
+      return "login";
+    } else if (id_pw[0] === db[i][0] && id_pw[1] !== db[i][1]) {
+      answer = "wrong pw";
+    } else {
+      answer = "fail";
+    }
   }
 
-  if (
-    idArr.includes(id) &&
-    pwArr.includes(pw) &&
-    idArr.indexOf(id) === pwArr.indexOf(pw)
-  ) {
-    return "login";
-  } else if (
-    idArr.includes(id) &&
-    pwArr.includes(pw) &&
-    idArr.indexOf(id) !== pwArr.indexOf(pw)
-  ) {
-    return "wrong pw";
-  } else {
-    return "fail";
-  }
+  return answer;
 }
 
 console.log(solution(id_pw, db));
+
+
+function solution(id_pw, db) {
+//     db = db.filter(v=>v[0]===id_pw[0]);
+
+//     if (!db.length) return 'fail';
+
+//     for (let d of db) if (d[1] === id_pw[1]) return 'login';
+
+//     return 'wrong pw';
+// }
