@@ -1,15 +1,24 @@
-const my_string = "a A a b B b";
+const my_string = "We are the world";
 
 function solution(my_string) {
-  let answer = "";
+  let result;
+  let str = my_string.split("");
+  let arr = [];
 
-  let newWord = new Set([...my_string]);
-
-  for (let x of newWord) {
-    answer += x;
+  for (let i = 0; i < str.length; i++) {
+    if (!arr.includes(str[i])) {
+      arr.push(str[i]);
+    }
   }
 
-  return answer;
+  return arr.join("");
 }
 
 console.log(solution(my_string));
+
+// const my_string = "We are the world";
+
+// function solution(my_string) {
+//   return [...new Set(my_string)].join("");
+// }
+// console.log(solution(my_string));

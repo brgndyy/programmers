@@ -1,10 +1,13 @@
-const before = "olleh";
-const after = "hello";
+let before = "allpe";
+let after = "apple";
 
 function solution(before, after) {
-  let arr = 0;
+  before = [...before].sort(); // ['a', 'e', 'l', 'l', 'p']
+  after = [...after].sort(); //  ['a', 'e', 'l', 'p', 'p']
 
-  return arr;
+  return before.filter((a, i) => a === after[i]).length === after.length
+    ? 1
+    : 0;
 }
 
 console.log(solution(before, after));

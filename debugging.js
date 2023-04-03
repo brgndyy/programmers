@@ -1,25 +1,22 @@
-const numbers = "onetwothreefourfivesixseveneightnine";
+let chicken = 1081;
 
-function solution(numbers) {
+function solution(chicken) {
   var answer = 0;
-  let oneToTen = [
-    "zero",
-    "one",
-    "two",
-    "three",
-    "four",
-    "five",
-    "six",
-    "seven",
-    "eight",
-    "nine",
-  ];
 
-  for (let i = 0; i < oneToTen.length; i++) {
-    numbers = numbers.split(oneToTen[i]).join(i);
+  let result = 0;
+  let some = 0;
+
+  while (chicken <= 1) {
+    some += chicken % 10;
+    chicken = chicken / 10; // 1
+
+    result += chicken; // 119
+
+    if (some >= 10) {
+      result += some / 10;
+    }
   }
-
-  return numbers;
+  return result;
 }
 
-console.log(solution(numbers));
+console.log(solution(chicken));
