@@ -3,6 +3,7 @@ const numbers = "onetwothreefourfivesixseveneightnine";
 function solution(numbers) {
   var answer = 0;
   const oneToTen = [
+    "zero",
     "one",
     "two",
     "three",
@@ -12,15 +13,13 @@ function solution(numbers) {
     "seven",
     "eight",
     "nine",
-    "ten",
   ];
 
-  for (let i = 0; i < oneToTen.length; i++) {
-    if (numbers.includes(oneToTen[i])) {
-      numbers.split(oneToTen[i]);
-    }
+  for (let i = 0; i <= oneToTen.length; i++) {
+    numbers = numbers.split(oneToTen[i]).join(i);
   }
-  return answer;
+
+  return Number(numbers);
 }
 
 console.log(solution(numbers));

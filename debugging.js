@@ -1,11 +1,13 @@
-let board = [
-  [5, 3, 7, 2, 3],
-  [3, 7, 1, 6, 1],
-  [7, 2, 5, 3, 4],
-  [4, 3, 6, 4, 1],
-  [8, 7, 3, 5, 2],
-];
+const numbers = [10, 20, 30, 5, 5, 20, 5];
 
-function solution(board) {}
+function solution(numbers) {
+  let numbersSum = [];
+  for (let i = 0; i < numbers.length; i++) {
+    for (let j = i + 1; j < numbers.length; j++) {
+      numbersSum.push(numbers[i] * numbers[j]);
+    }
+  }
 
-console.log(solution(board));
+  return Math.max(...numbersSum);
+}
+console.log(solution(numbers));
