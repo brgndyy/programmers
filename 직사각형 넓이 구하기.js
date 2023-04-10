@@ -1,26 +1,27 @@
 const dots = [
+  [-1, -1], // oneVertex
   [1, 1],
-  [2, 1],
-  [2, 2],
-  [1, 2],
+  [1, -1], // oneVertex
+  [-1, 1],
 ];
 
 function solution(dots) {
-  let oneVertex = [];
-  // 일단 무조건 첫번째 꼭지점은 oneVertex 에 넣어주기
-  oneVertex.push(dots.splice(0, 1)); // [[1, 1]];
+  // 무조건 dots에서 첫번째 배열 뽑아주기
+  let xVertex = [];
+  xVertex.push(dots.shift()); // [[-1, -1]];
 
-  // dots 의 나머지 요소들중에서 oneVertex 배열과 x축 위치가 같은 요소를 추출
-  const sameDot = dots.filter((dot) => dot[0] === oneVertex[0][0][0]); // [1, 2];
+  //dots 배열에서 oneVertex[0][1]의 값과는 값지만 oneVertex[0][0]과는 값이 달라야함
+  let sameDot = dots.filter(
+    (dot) => dot[1] === xVertex[0][1] && dot[0] !== xVertex[0][0]
+  ); // [1, -1];
 
-  oneVertex.push(sameDot); // [[1, 1], [1, 2]];
+  xVertex.push([...sameDot[0]]); // onVertex 에 원래 있던 배열과 묶어주기
+  dots.splice(dots.indexOf(sameDot[0]), 1); // 원래 dots 배열에서도 잘라주기
 
-  dots.splice(sameDot[0], 1); // [[2,2], [1,2]];
+  let xWidth = Math.abs(xVertex[0][0] - xVertex[1][0]);
+  let yWidth = Math.abs(dots[0][1] - xVertex[1][1]);
 
-  const oneVertexWidth = Math.abs(oneVertex[0][0][1] - oneVertex[1][0][1]);
-  const twoVertexWidth = Math.abs(dots[0][0] - dots[1][0]);
-
-  return oneVertexWidth * twoVertexWidth;
+  return xWidth * yWidth;
 }
 
 console.log(solution(dots));
