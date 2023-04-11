@@ -1,23 +1,23 @@
-const numbers = [1, 2, 3, 4, 5, 6];
-const k = 5;
+const hp = 997;
 
-function solution(numbers, k) {
-  let count = 1;
-  let answer = 0;
+function solution(hp) {
+  var answer = 0;
 
-  for (let i = 0; i < k; i++) {
-    count++;
-    i += 2;
-    if (i === numbers.length - 2) {
-      i = i - numbers.length - 2;
-    }
-    answer = numbers[i];
-    if (count === k) {
-      break;
+  const general = 5;
+  const soldier = 3;
+  const worker = 1;
+
+  while (hp > 0) {
+    answer += Math.floor(hp / general);
+    hp = hp - Math.floor(hp / general) * general;
+
+    if (hp >= 1 && hp < 3) {
+      answer += hp / worker;
+      hp = hp - hp / worker;
     }
   }
 
-  return answer;
+  return hp;
 }
 
-console.log(solution(numbers, k));
+console.log(solution(hp));

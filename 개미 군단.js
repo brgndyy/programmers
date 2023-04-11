@@ -7,13 +7,12 @@ function solution(hp) {
   const soldier = 3;
   const worker = 1;
 
-  while (hp > 1) {
-    answer += Math.floor(hpp / general); //199;
-
-    hp = hp - generalNum * general;
+  while (hp < 5) {
+    answer += Math.floor(hp / general);
+    hp = hp - Math.floor(hp / general);
   }
 
-  return hpp;
+  return hp;
 }
 
 console.log(solution(hp));
