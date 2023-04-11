@@ -1,25 +1,15 @@
 const s = "-1 -2 -3 Z";
 
 function solution(s) {
-  var answer = 0;
-  let splitZ = s.split(" ");
+  const stack = [];
 
-  if (!splitZ.includes("Z")) {
-    answer = splitZ.reduce((a, b) => {
-      return Number(a) + Number(b);
-    }, 0);
-  } else {
-    for (let i = 0; i < splitZ.length; i++) {
-      if (splitZ[i + 1] === "Z") {
-        splitZ.splice(i, 2);
-        i--;
-      } else {
-        answer += Number(splitZ[i]);
-      }
-    }
-  }
+  s.split(" ").forEach((target) => {
+    if (target === "Z")
+      stack.pop(); // 만약에 Z가 등장했다면, stack에서 맨 뒤에 요소를 제거
+    else stack.push(+target);
+  });
 
-  return answer;
+  return stack.length ? stack.reduce((pre, cur) => pre + cur) : 0;
 }
 
 console.log(solution(s));
