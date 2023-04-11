@@ -8,8 +8,8 @@ function solution(numbers, k) {
   for (let i = 0; i < k; i++) {
     count++;
     i += 2;
-    if (i === numbers.length - 2) {
-      i = i - numbers.length - 2;
+    if (i === numbers.length) {
+      i = i - numbers.length;
     }
     answer = numbers[i];
     if (count === k) {
