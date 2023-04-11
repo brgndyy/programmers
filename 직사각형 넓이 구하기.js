@@ -1,27 +1,20 @@
 const dots = [
-  [-1, -1], // oneVertex
+  [-1, -1],
   [1, 1],
-  [1, -1], // oneVertex
+  [1, -1],
   [-1, 1],
 ];
 
 function solution(dots) {
-  // 무조건 dots에서 첫번째 배열 뽑아주기
-  let xVertex = [];
-  xVertex.push(dots.shift()); // [[-1, -1]];
+  let x = [];
+  let y = [];
 
-  //dots 배열에서 oneVertex[0][1]의 값과는 값지만 oneVertex[0][0]과는 값이 달라야함
-  let sameDot = dots.filter(
-    (dot) => dot[1] === xVertex[0][1] && dot[0] !== xVertex[0][0]
-  ); // [1, -1];
+  for (let dot of dots) {
+    x.push(dot[0]);
+    y.push(dot[1]);
+  }
 
-  xVertex.push([...sameDot[0]]); // onVertex 에 원래 있던 배열과 묶어주기
-  dots.splice(dots.indexOf(sameDot[0]), 1); // 원래 dots 배열에서도 잘라주기
-
-  let xWidth = Math.abs(xVertex[0][0] - xVertex[1][0]);
-  let yWidth = Math.abs(dots[0][1] - xVertex[1][1]);
-
-  return xWidth * yWidth;
+  return (Math.max(...x) - Math.min(...x)) * (Math.max(...y) - Math.min(...y));
 }
 
 console.log(solution(dots));
