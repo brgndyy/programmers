@@ -1,18 +1,10 @@
 const hp = 999;
 
 function solution(hp) {
-  var answer = 0;
-
-  const general = 5;
-  const soldier = 3;
-  const worker = 1;
-
-  while (hp < 5) {
-    answer += Math.floor(hp / general);
-    hp = hp - Math.floor(hp / general);
-  }
-
-  return hp;
+  const 장군개미 = Math.floor(hp / 5);
+  const 병정개미 = Math.floor((hp - 장군개미 * 5) / 3);
+  const 일개미 = hp - (장군개미 * 5 + 일개미 * 3);
+  return 장군개미 + 병정개미 + 일개미;
 }
 
 console.log(solution(hp));
