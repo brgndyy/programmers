@@ -1,8 +1,8 @@
-const numbers = "onetwothreefourfivesixseveneightnine";
+const numbers = "onefourzerosixseven";
 
 function solution(numbers) {
   var answer = 0;
-  const oneToTen = [
+  let alphabet = [
     "zero",
     "one",
     "two",
@@ -15,11 +15,11 @@ function solution(numbers) {
     "nine",
   ];
 
-  for (let i = 0; i <= oneToTen.length; i++) {
-    numbers = numbers.split(oneToTen[i]).join(i);
+  for (let i = 0; i < alphabet.length; i++) {
+    numbers = numbers.split(alphabet[i]).join(i);
   }
 
-  return Number(numbers);
+  return parseInt(numbers);
 }
 
 console.log(solution(numbers));
