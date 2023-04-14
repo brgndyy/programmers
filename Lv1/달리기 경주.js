@@ -13,7 +13,11 @@ function solution(players, callings) {
   return players;
 }
 
-console.log(solution(players, callings));
+console.time("test");
+
+solution(players, callings);
+
+console.timeEnd("test");
 
 // 1. 인덱스를 먼저 찾는다
 // 2. 그 인덱스를 요소를 잘라서 앞에 넣어준다 (?)
