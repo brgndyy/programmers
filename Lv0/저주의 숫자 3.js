@@ -1,7 +1,5 @@
-const n = 15;
+const n = 40;
 
-function solution(n) {
-  var answer = 0;
-}
+function solution(n) {}
 
 console.log(solution(n));

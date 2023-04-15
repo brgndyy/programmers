@@ -1,19 +1,18 @@
-const numbers = [1, 2, 3, 4, 5, 6];
-const k = 5;
+const numbers = [1, 2, 3, 4];
+const k = 2;
 
 function solution(numbers, k) {
-  let count = 1;
-  let answer = 0;
+  var answer = 0;
 
-  for (let i = 0; i < k; i++) {
-    count++;
-    i += 2;
-    if (i === numbers.length) {
-      i = i - numbers.length;
-    }
-    answer = numbers[i];
-    if (count === k) {
-      break;
+  // numbers.length가 짝수일때,
+
+  if (numbers.length % 2 === 0) {
+    for (let i = 1; i < k; i++) {
+      answer += 2;
+
+      if (answer > numbers.length - 1) {
+        answer = numbers[0];
+      }
     }
   }
 
