@@ -2,22 +2,33 @@ const players = ["mumu", "soe", "poe", "kai", "mine"];
 const callings = ["kai", "kai", "mine", "mine"];
 
 function solution(players, callings) {
-  callings.forEach((name) => {
-    let index = players.indexOf(name);
+  const hash = new Map();
 
-    let cutWord = players.splice(index, 1);
+  // Map 객체에 넣어주기
+  players.forEach((member, index) => {
+    hash.set(member, index);
+  });
 
-    players.splice(index - 1, 0, name);
+  callings.forEach((member) => {
+    // callings에 있는 현재 선수 인덱스 (3)
+    const curIndex = hash.get(member);
+
+    // callings에 있는 선수 앞에 있는 선수
+    const prevMember = players[curIndex - 1];
+
+    [players[curIndex], players[curIndex - 1]] = [
+      players[curIndex - 1],
+      players[curIndex],
+    ];
+
+    hash.set(member, hash.get(member) - 1);
+    hash.set(prevMember, hash.get(member) + 1);
   });
 
   return players;
 }
 
-console.time("test");
-
-solution(players, callings);
-
-console.timeEnd("test");
+console.log(solution(players, callings));
 
 // 1. 인덱스를 먼저 찾는다
 // 2. 그 인덱스를 요소를 잘라서 앞에 넣어준다 (?)
