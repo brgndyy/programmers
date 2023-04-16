@@ -1,23 +1,10 @@
-const s = "they are nothing";
+const n = 18;
+const m = 27;
 
-function solution(s) {
-  let splitS = s.split(" ");
+function solution(n, m) {
+  let gcd = (a, b) => (a % b === 0 ? b : gcd(b, a % b));
 
-  let strArr = [];
-
-  for (let i = 0; i < splitS.length; i++) {
-    let newStr = "";
-    for (let j = 0; j < splitS[i].length; j++) {
-      if (j === 0 || j % 2 === 0) {
-        newStr += splitS[i][j].toUpperCase();
-      } else {
-        newStr += splitS[i][j];
-      }
-    }
-    strArr.push(newStr);
-  }
-
-  return strArr.join(" ");
+  return gcd(n, m);
 }
 
-console.log(solution(s));
+console.log(solution(n, m));
