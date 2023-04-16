@@ -1,4 +1,4 @@
-const s = "they are nothing";
+const s = "try hello world";
 
 function solution(s) {
   let splitS = s.split(" ");
@@ -6,18 +6,17 @@ function solution(s) {
   let strArr = [];
 
   for (let i = 0; i < splitS.length; i++) {
-    let newStr = "";
     for (let j = 0; j < splitS[i].length; j++) {
       if (j === 0 || j % 2 === 0) {
-        newStr += splitS[i][j].toUpperCase();
+        splitS[i][j].toUpperCase();
       } else {
-        newStr += splitS[i][j];
+        continue;
       }
     }
-    strArr.push(newStr);
+    strArr.push(splitS[i]);
   }
 
-  return strArr.join(" ");
+  return strArr;
 }
 
 console.log(solution(s));
