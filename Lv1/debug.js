@@ -1,20 +1,21 @@
-const strings = ["sun", "bed", "car"];
-const n = 1;
+const n = 16;
 
-function solution(strings, n) {
-  var answer = [];
+function solution(n) {
+  let arr = Array.from({ length: n - 2 }, (_, index) => index + 3).filter(
+    (num) => num % 2 !== 0
+  );
 
-  return strings.sort((a, b) => {
-    if (a[n] > b[n]) {
-      // a[n]이 b[n] 보다 크다면, 그대로 오름차순 정렬
-      return 1;
-    } else if (a[n] < b[n]) {
-      // a[n]이 b[n]보다 작으면 a[n]이 뒤로 밀림
-      return -1;
-    } else return a > b ? 1 : -1;
-  });
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] === 0) continue;
+    for (let j = i + 1; j < arr.length; j++) {
+      if (arr[j] % arr[i] === 0) {
+        arr[j] = 0; // 소수가 아닌 숫자는 0으로 설정
+      }
+    }
+  }
 
-  return strings;
+  // 배열에서 0을 제거하고 결과를 반환
+  return arr.filter((num) => num !== 0).length + 1;
 }
 
-console.log(solution(strings, n));
+console.log(solution(n));
