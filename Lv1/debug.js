@@ -1,21 +1,28 @@
-const n = 16;
+const s = "AB";
+const n = 1;
 
-function solution(n) {
-  let arr = Array.from({ length: n - 2 }, (_, index) => index + 3).filter(
-    (num) => num % 2 !== 0
-  );
+function solution(s, n) {
+  let arr = [];
+  let answer = "";
+  let splitS = s.split("");
 
-  for (let i = 0; i < arr.length; i++) {
-    if (arr[i] === 0) continue;
-    for (let j = i + 1; j < arr.length; j++) {
-      if (arr[j] % arr[i] === 0) {
-        arr[j] = 0; // 소수가 아닌 숫자는 0으로 설정
+  for (let i = 0; i < splitS.length; i++) {
+    let charCode = 0;
+    if (splitS[i].charCodeAt() === 32) {
+      charCode = splitS[i].charCodeAt();
+      arr.push(String.fromCharCode(charCode));
+    } else {
+      charCode = splitS[i].charCodeAt() + n;
+      if ((charCode > 90 && charCode < 96) || charCode > 122) {
+        charCode -= 26;
+        arr.push(String.fromCharCode(charCode));
+      } else {
+        arr.push(String.fromCharCode(charCode));
       }
     }
   }
 
-  // 배열에서 0을 제거하고 결과를 반환
-  return arr.filter((num) => num !== 0).length + 1;
+  return arr.join("");
 }
 
-console.log(solution(n));
+console.log(solution(s, n));
