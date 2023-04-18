@@ -1,22 +1,19 @@
-const numbers = [1, 2, 3, 4];
-const k = 2;
+const numbers = [1, 2, 3];
+const k = 3;
 
 function solution(numbers, k) {
-  var answer = 0;
+  let answer;
+  let count = 0;
 
-  // numbers.length가 짝수일때,
+  for (let i = 0; i < k; i++) {
+    count += 2;
 
-  if (numbers.length % 2 === 0) {
-    for (let i = 1; i < k; i++) {
-      answer += 2;
-
-      if (answer > numbers.length - 1) {
-        answer = numbers[0];
-      }
+    if (count > numbers.length) {
+      count -= numbers.length;
     }
   }
 
-  return answer;
+  return count;
 }
 
 console.log(solution(numbers, k));

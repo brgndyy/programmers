@@ -9,11 +9,11 @@ function solution(n) {
     let measureCount = 0;
     let compareNum = 1;
 
-    while (compareNum > num) {
+    while (compareNum <= num) {
       if (num % compareNum === 0) {
         measureCount++;
-        compareNum++;
       }
+      compareNum++;
     }
 
     if (measureCount >= 3) {

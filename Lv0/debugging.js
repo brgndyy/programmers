@@ -1,27 +1,27 @@
-const n = 15;
+const numbers = [1, 2, 3, 4];
+const k = 2;
 
-function solution(n) {
+function solution(numbers, k) {
+  let answer;
+  let catcher;
   let count = 0;
 
-  let arr = Array.from({ length: n - 3 }, (_, index) => index + 4);
+  for (let i = 1; i <= k; i++) {
+    catcher = numbers[i - 1];
 
-  arr.forEach((num) => {
-    let measureCount = 0;
-    let compareNum = 1;
+    i += 1;
 
-    while (compareNum <= num) {
-      if (num % compareNum === 0) {
-        measureCount++;
-      }
-      compareNum++;
+    if (i >= numbers.length) {
+      i -= numbers.length;
     }
 
-    if (measureCount >= 3) {
-      count++;
+    count++;
+    if (count === 5) {
+      break;
     }
-  });
+  }
 
-  return count;
+  return catcher;
 }
 
-console.log(solution(n));
+console.log(solution(numbers, k));
