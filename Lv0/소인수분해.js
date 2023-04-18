@@ -1,20 +1,20 @@
-const n = 24;
+const n = 420;
 
 function solution(n) {
-  var answer = [];
+  const result = [];
+  let divisor = 2;
 
-  let decimal = [
-    2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71,
-    73, 39, 83, 89, 97, 101, 103, 107, 109, 113, 127,
-  ];
+  while (n >= 2) {
+    if (n % divisor === 0) {
+      result.push(divisor);
 
-  for (let i = 0; i < decimal.length; i++) {
-    if (n % decimal[i] === 0) {
-      answer.push(decimal[i]);
+      n = n / divisor;
+    } else {
+      divisor++;
     }
   }
 
-  return answer.sort((a, b) => a - b);
+  return result;
 }
 
 console.log(solution(n));

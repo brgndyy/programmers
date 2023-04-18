@@ -1,30 +1,27 @@
-let board = [
-  [1, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 1, 0, 0],
-  [0, 0, 1, 0, 0],
-  [0, 0, 0, 0, 0],
-];
+const n = 15;
 
-function solution(board) {
-  let boardNum = 25;
+function solution(n) {
+  let count = 0;
 
-  const dx = [1, 0, -1, 0, 1, 1, -1, -1];
-  const dy = [0, 1, 0, -1, -1, 1, 1, -1];
+  let arr = Array.from({ length: n - 3 }, (_, index) => index + 4);
 
-  for (let i = 0; i < board.length; i++) {
-    for (let j = 0; j < board[i].length; j++) {
-      if (board[i][j] === 1) {
-        for (let k = 0; k < dx.length; k++) {
-          let cx = i + dx[k]; // 3
-          let cy = j + dy[k]; // 2
-          board[cx][cy] += 1;
-        }
+  arr.forEach((num) => {
+    let measureCount = 0;
+    let compareNum = 1;
+
+    while (compareNum <= num) {
+      if (num % compareNum === 0) {
+        measureCount++;
       }
+      compareNum++;
     }
-  }
 
-  return board;
+    if (measureCount >= 3) {
+      count++;
+    }
+  });
+
+  return count;
 }
 
-console.log(solution(board));
+console.log(solution(n));
