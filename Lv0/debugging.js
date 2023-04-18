@@ -1,27 +1,18 @@
-const numbers = [1, 2, 3, 4];
-const k = 2;
+const numbers = [1, 2, 3, 4, 5, 6];
+const k = 5;
 
 function solution(numbers, k) {
-  let answer;
-  let catcher;
-  let count = 0;
+  let catcher = 0;
 
-  for (let i = 1; i <= k; i++) {
-    catcher = numbers[i - 1];
+  for (let i = 0; i < k; i++) {
+    catcher += 2;
 
-    i += 1;
-
-    if (i >= numbers.length) {
-      i -= numbers.length;
-    }
-
-    count++;
-    if (count === 5) {
-      break;
+    if (catcher > numbers.length) {
+      catcher -= numbers.length;
     }
   }
 
-  return catcher;
+  return numbers[catcher - 2];
 }
 
 console.log(solution(numbers, k));
