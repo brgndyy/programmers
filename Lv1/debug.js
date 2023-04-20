@@ -1,18 +1,43 @@
-const N = 5;
-const stages = [2, 1, 2, 6, 2, 4, 3, 3];
+const board = [
+  [0, 0, 0, 0],
+  [0, 0, 0, 0],
+  [0, 4, 4, 0],
+  [1, 2, 2, 1],
+];
 
-function solution(N, stages) {
-  var answer = [];
+// [4, 4, 1, 1, 2, 2]
 
-  let hash = new Map();
+const moves = [2, 3, 1, 4, 2, 3];
 
-  hash.set(1, 0.125);
-  hash.set(2, 0.5);
-  hash.set(3, 0.5);
-  hash.set(4, 0.1);
-  hash.set(5, 0);
+function solution(board, moves) {
+  let cart = [];
+  let answer = [];
 
-  return hash;
+  for (let i = 0; i < moves.length; i++) {
+    let line = moves[i]; // 3
+
+    for (let j = 0; j < board.length; j++) {
+      if (board[j][line - 1] !== 0) {
+        cart.push(board[j][line - 1]);
+        board[j][line - 1] = 0;
+        break;
+      }
+    }
+  }
+
+  // [4, 4, 1, 1, 2, 2]
+
+  for (let k = 0; k < cart.length; k++) {
+    if (cart[k] === cart[k + 1]) {
+      answer.push(cart[k], cart[k]);
+
+      cart.splice(k, 2);
+
+      k = -1;
+    }
+  }
+
+  return answer.length;
 }
 
-console.log(solution(N, stages));
+console.log(solution(board, moves));
