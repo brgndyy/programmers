@@ -7,8 +7,8 @@ function solution(a, b, n) {
 
   var answer = 0;
 
-  while (emptyBottles > a) {
-    let getColas = Math.floor(emptyBottles / a); // 10 5 2 1
+  while (emptyBottles >= a) {
+    let getColas = Math.floor(emptyBottles / a) * b; // 10 5 2 1
 
     answer += getColas; // 10 15 17 18
 

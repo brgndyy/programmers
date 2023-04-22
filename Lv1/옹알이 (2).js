@@ -17,3 +17,7 @@ function solution(babbling) {
 }
 
 console.log(solution(babbling));
+
+let str = "ayayewoomaaya";
+
+console.log(str.split("aya").join(""));
