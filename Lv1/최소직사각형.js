@@ -6,31 +6,10 @@ const sizes = [
   [5, 15],
 ];
 
-const sizes2 = [
-  [60, 50],
-  [30, 70],
-  [60, 30],
-  [80, 40],
-];
-
-function solution(sizes) {
-  var answer = 0;
-
-  let wArr = [];
-  let hArr = [];
-
-  sizes.forEach((arr) => {
-    wArr.push(arr[0]);
-    hArr.push(arr[1]);
-  });
-
-  let maxW = Math.max(...wArr); // 14
-  let maxH = Math.max(...hArr); // 15
-
-  wArr.indexOf(maxW); // 3
-  hArr.indexOf(maxH); // 1
-
-  return;
-}
+function solution(sizes) {}
 
 console.log(solution(sizes));
+
+// index[0]부분에 큰 길이 다 몰아주고
+// index[1] 부분에 작은 길이 다 몰아주기
+// 그 안에서 또 반복문 돌면서 가장 큰값 뽑아주기
