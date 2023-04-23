@@ -1,21 +1,18 @@
-const a = 2;
-const b = 1;
-const n = 20;
+const ingredient = [2, 1, 1, 2, 3, 1, 2, 3, 1, 1, 2, 3, 1];
 
-function solution(a, b, n) {
-  let emptyBottles = n;
+function solution(ingredient) {
+  let answer = 0;
+  const stack = [];
 
-  var answer = 0;
+  for (let i of ingredient) {
+    stack.push(i);
 
-  while (emptyBottles >= a) {
-    let getColas = Math.floor(emptyBottles / a); // 2
-
-    answer += getColas; // 15
-
-    emptyBottles = emptyBottles - a * getColas + getColas;
+    if (stack.slice(-4).join("") == "1231") {
+      stack.splice(-4);
+      answer++;
+    }
   }
-
   return answer;
 }
 
-console.log(solution(a, b, n));
+console.log(solution(ingredient));
