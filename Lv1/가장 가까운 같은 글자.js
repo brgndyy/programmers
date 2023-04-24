@@ -8,9 +8,10 @@ function solution(s) {
   for (let i = 0; i < splitS.length; i++) {
     let count = 0;
     strArr.push(splitS[i]);
+
     for (let j = 0; j < strArr.length; j++) {
       if (strArr.includes(splitS[i])) {
-        count = i - strArr.lastIndexOf(splitS[i]);
+        count = i - strArr.lastIndexOf(splitS);
       } else {
         count = -1;
       }
