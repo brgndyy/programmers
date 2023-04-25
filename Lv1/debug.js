@@ -1,27 +1,14 @@
 const s = "foobar";
 
 function solution(s) {
-  let splitS = s.split("");
-  var answer = [];
-  let strArr = [];
+  let answer = [];
 
-  for (let i = 0; i < splitS.length; i++) {
-    let count = 0;
+  [...s].map((str, index) => {
+    const count = s.slice(0, index).lastIndexOf(str);
 
-    if (i === 0) {
-      count = -1;
-      strArr.push(splitS[i]);
-    } else {
-      if (strArr.includes(splitS[i])) {
-        count = i - strArr.lastIndexOf(splitS[i]);
-      } else {
-        count = -1;
-      }
-      strArr.push(splitS[i]);
-    }
+    return count < 0 ? answer.push(-1) : answer.push(index - count);
+  });
 
-    answer.push(count);
-  }
   return answer;
 }
 
