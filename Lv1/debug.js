@@ -1,4 +1,4 @@
-const s = "banana";
+const s = "foobar";
 
 function solution(s) {
   let splitS = s.split("");
@@ -7,13 +7,17 @@ function solution(s) {
 
   for (let i = 0; i < splitS.length; i++) {
     let count = 0;
-    strArr.push(splitS[i]);
-    for (let j = 0; j < strArr.length; j++) {
+
+    if (i === 0) {
+      count = -1;
+      strArr.push(splitS[i]);
+    } else {
       if (strArr.includes(splitS[i])) {
         count = i - strArr.lastIndexOf(splitS[i]);
       } else {
         count = -1;
       }
+      strArr.push(splitS[i]);
     }
 
     answer.push(count);

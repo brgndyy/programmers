@@ -9,11 +9,15 @@ function solution(s) {
     let count = 0;
     strArr.push(splitS[i]);
 
-    for (let j = 0; j < strArr.length; j++) {
-      if (strArr.includes(splitS[i])) {
-        count = i - strArr.lastIndexOf(splitS);
-      } else {
-        count = -1;
+    if (i === 0) {
+      count = -1;
+    } else {
+      for (let j = 0; j < strArr.length; j++) {
+        if (strArr.includes(splitS[i])) {
+          count = i - strArr.lastIndexOf(splitS);
+        } else {
+          count = -1;
+        }
       }
     }
 
