@@ -9,17 +9,15 @@ function solution(keymap, targets) {
     let splitTargets = targets[i].split(""); // ["A", "B", "C", "D"];
 
     for (let j = 0; j < splitTargets.length; j++) {
-      let minInputNum = 0;
-      for (let k = 0; k < keymap.length; k++) {
-        let keypadNum = keymap[k].indexOf(splitTargets[j]); // 0
+      for (let k = 0; k < targets.length; k++) {
+        let minInputNum = targets[k].indexOf(splitTargets[j]);
 
-        if (keypadNum === -1) {
+        if (minInputNum === -1) {
           continue;
-        } else if (minInputNum >= keypadNum) {
-          minInputNum = keypadNum;
         }
+
+        count += minInputNum + 1;
       }
-      count += minInputNum + 1;
     }
     answer.push(count);
   }
