@@ -1,23 +1,21 @@
-const array = [1, 1, 2, 2];
+const n = 40;
 
-function solution(array) {
-  let hash = new Map();
-  let newArr = [...new Set([...array])];
-  let max = 0;
-  let maxArr = [];
+function solution(n) {
+  let i = 0;
+  let count = 1;
 
-  [...array].forEach((num) => {
-    hash.set(num, (hash.get(num) || 0) + 1);
-  });
+  while (count <= n) {
+    i += 1;
+    count++;
 
-  for (let i = 0; i < newArr.length; i++) {
-    let max = hash.get(newArr[i]);
-    if (hash.get(newArr[i]) >= max) {
-      max = hash.get(newArr[i]);
+    if (i % 3 === 0 || i.toString().includes("3")) {
+      while (i % 3 === 0 || i.toString().includes("3")) {
+        i += 1;
+      }
     }
   }
 
-  return newArr;
+  return i;
 }
 
-console.log(solution(array));
+console.log(solution(n));
