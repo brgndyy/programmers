@@ -1,24 +1,24 @@
 const array = [1, 2, 3, 3, 3, 4];
 
 function solution(array) {
-  var answer = 0;
-  let arr = [];
+  let hash = new Map();
+  let maxArr = [];
+  let max = 0;
 
-  for(let i = 0; i < array.length; i++){
-        if(!arr.includes(array[i])){
-            arr.push({array[i] : array[i]});
-        }
-  }
+  [...array].forEach((num) => {
+    hash.set(num, (hash.get(num) || 0) + 1);
+  });
 
-  return answer;
+  hash.forEach((item) => {
+    max = item;
+    if (item > max) {
+      maxArr.push(item);
+    }
+  });
+
+  return maxArr;
 }
 
 console.log(solution(array));
 
 // 나와야하는 결과값
-
-// let arr = [{ 1: 1 }, { 2: 1 }, { 3: 3 }, { 4: 1 }];
-
-
-
-

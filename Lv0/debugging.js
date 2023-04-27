@@ -1,18 +1,23 @@
-const numbers = [1, 2, 3, 4, 5, 6];
-const k = 5;
+const array = [1, 1, 2, 2];
 
-function solution(numbers, k) {
-  let catcher = 0;
+function solution(array) {
+  let hash = new Map();
+  let newArr = [...new Set([...array])];
+  let max = 0;
+  let maxArr = [];
 
-  for (let i = 0; i < k; i++) {
-    catcher += 2;
+  [...array].forEach((num) => {
+    hash.set(num, (hash.get(num) || 0) + 1);
+  });
 
-    if (catcher > numbers.length) {
-      catcher -= numbers.length;
+  for (let i = 0; i < newArr.length; i++) {
+    let max = hash.get(newArr[i]);
+    if (hash.get(newArr[i]) >= max) {
+      max = hash.get(newArr[i]);
     }
   }
 
-  return numbers[catcher - 2];
+  return newArr;
 }
 
-console.log(solution(numbers, k));
+console.log(solution(array));
