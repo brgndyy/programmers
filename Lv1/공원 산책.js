@@ -2,7 +2,11 @@ const park = ["OSO", "OOO", "OXO", "OOO"];
 const routes = ["E 2", "S 3", "W 1"];
 
 function solution(park, routes) {
-  return startIndex;
+  let newPark = [...park].map((pos) => pos.split(""));
+
+  let startPos = newPark.filter((pos, index) => pos.indexOf("S"));
+
+  return startPos;
 }
 
 console.log(solution(park, routes));
