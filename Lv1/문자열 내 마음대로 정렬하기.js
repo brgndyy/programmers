@@ -1,5 +1,5 @@
-const strings = ["sun", "bed", "car"];
-const n = 1;
+const strings = ["abce", "abcd", "cdx"];
+const n = 2;
 
 function solution(strings, n) {}
 
