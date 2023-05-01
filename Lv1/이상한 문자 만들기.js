@@ -2,21 +2,19 @@ const s = "try hello world";
 
 function solution(s) {
   let splitS = s.split(" ");
-
-  let strArr = [];
+  let answer = [];
 
   for (let i = 0; i < splitS.length; i++) {
     for (let j = 0; j < splitS[i].length; j++) {
-      if (j === 0 || j % 2 === 0) {
-        splitS[i][j].toUpperCase();
+      if (j % 2 === 0) {
+        answer += splitS[i][j].toUpperCase();
       } else {
-        continue;
+        answer += splitS[i][j];
       }
     }
-    strArr.push(splitS[i]);
   }
 
-  return strArr;
+  return answer;
 }
 
 console.log(solution(s));
