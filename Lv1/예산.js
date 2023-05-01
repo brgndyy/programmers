@@ -2,19 +2,18 @@ const d = [2, 2, 3, 3];
 const budget = 10;
 
 function solution(d, budget) {
-  let count = 0;
-  d.sort((a, b) => a - b);
+  let sortedD = d.sort((a, b) => a - b);
+  let max = 0;
 
-  for (let i = 0; i < d.length; i++) {
-    budget -= d[i];
-    count++;
-    if (budget < 0) {
-      count--;
-      budget += d[i];
+  for (let i = 0; i < sortedD.length; i++) {
+    if (budget - sortedD[i] < 0) {
+      continue;
     }
+    budget -= sortedD[i];
+    max++;
   }
 
-  return count;
+  return max;
 }
 
 console.log(solution(d, budget));
