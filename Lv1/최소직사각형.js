@@ -1,15 +1,31 @@
 const sizes = [
-  [10, 7],
-  [12, 3],
-  [8, 15],
-  [14, 7],
-  [5, 15],
+  [60, 50],
+  [30, 70],
+  [60, 30],
+  [80, 40],
 ];
 
-function solution(sizes) {}
+function solution(sizes) {
+  let newSizes = sizes.map((arr) => {
+    if (arr[0] > arr[1]) {
+      return arr;
+    } else {
+      let shift = arr.shift();
+      arr.push(shift);
+
+      return arr;
+    }
+  });
+
+  let W = [];
+  let H = [];
+
+  newSizes.forEach((arr) => {
+    W.push(arr[0]);
+    H.push(arr[1]);
+  });
+
+  return Math.max(...W) * Math.max(...H);
+}
 
 console.log(solution(sizes));
-
-// index[0]부분에 큰 길이 다 몰아주고
-// index[1] 부분에 작은 길이 다 몰아주기
-// 그 안에서 또 반복문 돌면서 가장 큰값 뽑아주기
