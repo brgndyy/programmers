@@ -1,23 +1,21 @@
 const babbling = ["ayayewoomaaya", "uuu", "yeye", "yemawooaya", "ayaayaaya"];
 
 function solution(babbling) {
-  var answer = 0;
-
-  let prons = ["aya", "ye", "woo", "ma"];
+  let canProArr = ["aya", "ye", "woo", "ma"];
+  let count = 0;
 
   for (let i = 0; i < babbling.length; i++) {
-    for (let j = 0; j < prons.length; j++) {
-      if (babbling[i].includes(prons[j])) {
-        babbling[i].splice(babbling[i].indexOf(prons[j]), 1);
+    let splitBablling = babbling[i];
+    for (let j = 0; j < canProArr.length; j++) {
+      splitBablling = splitBablling.split(canProArr[i]);
+
+      for (let k = 0; k < splitBablling.length; k++) {
+        if (splitBablling[k] === splitBablling[k + 1]) {
+          break;
+        }
       }
     }
   }
-
-  return answer;
 }
 
 console.log(solution(babbling));
-
-let str = "ayayewoomaaya";
-
-console.log(str.split("aya").join(""));
