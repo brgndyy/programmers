@@ -1,12 +1,5 @@
-const food = [1, 7, 2, 2];
+const food = [1, 3, 4, 6, 3];
 
-function solution(food) {
-  var oneLine = "";
-  let hash = new Map();
-
-  food.forEach((num, index) => hash.set(num, index + 1));
-
-  return hash;
-}
+function solution(food) {}
 
 console.log(solution(food));

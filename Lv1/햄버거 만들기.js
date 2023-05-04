@@ -1,17 +1,23 @@
 const ingredient = [2, 1, 1, 2, 3, 1, 2, 3, 1];
 
 function solution(ingredient) {
+  let stack = [];
   let count = 0;
-  const stack = [];
 
-  for (let i = 0; i < ingredient.length; i++) {
-    stack.push(ingredient[i]);
+  [...ingredient].forEach((num) => {
+    stack.push(num);
 
-    if (stack.slice(-4).join("") === "1231") {
-      stack.splice(-4);
-      count++;
+    if (stack.length >= 4) {
+      let joinStack = stack.slice(-4).join("");
+      if (joinStack === "1231") {
+        count++;
+        stack.pop();
+        stack.pop();
+        stack.pop();
+        stack.pop();
+      }
     }
-  }
+  });
 
   return count;
 }
