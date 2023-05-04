@@ -1,33 +1,30 @@
-const babbling = [
-  "ayaayaaya",
-  "ayayewoomaaya",
-  "uuu",
-  "yeye",
-  "yemawooaya",
-  "ayaayaaya",
-];
+const number = 10;
+const limit = 3;
+const power = 2;
 
-function solution(babbling) {
-  let canProArr = ["aya", "ye", "woo", "ma"];
-  let count = 0;
+function solution(number, limit, power) {
+  let measureArr = [];
 
-  for (let i = 0; i < babbling.length; i++) {
-    let babble = babbling[i];
-
-    for (let j = 0; j < canProArr.length; j++) {
-      if (babble.includes(canProArr[j].repeat(2))) {
-        break;
+  for (let i = 1; i <= number; i++) {
+    let count = 0;
+    for (let j = 1; j <= Math.sqrt(i); j++) {
+      if (i % j === 0) {
+        if (i / j === j) {
+          count++;
+        } else {
+          count += 2;
+        }
       }
-
-      babble = babble.split(canProArr[j]).join(" ");
     }
 
-    if (babble.split(" ").join("").length === 0) {
-      count += 1;
+    if (count > limit) {
+      count = power;
     }
+
+    measureArr.push(count);
   }
 
-  return count;
+  return measureArr.reduce((a, b) => a + b, 0);
 }
 
-console.log(solution(babbling));
+console.log(solution(number, limit, power));

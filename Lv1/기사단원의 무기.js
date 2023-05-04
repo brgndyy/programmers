@@ -1,4 +1,4 @@
-const number = 30;
+const number = 10;
 const limit = 3;
 const power = 2;
 
