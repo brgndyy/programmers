@@ -2,20 +2,26 @@ const players = ["mumu", "soe", "poe", "kai", "mine"];
 const callings = ["kai", "kai", "mine", "mine"];
 
 function solution(players, callings) {
-  for (let i = 0; i < callings.length; i++) {
-    let index = players.indexOf(callings[i]); // 3
-    let player = players.splice(index, 1); // 'kai'
+  let playersMap = new Map();
+  let playerArr = [...players];
+  let answer = [];
 
-    let slicePlayers = players.slice(index - 1); // 'poe', 'mine'
+  playerArr.forEach((player, index) => playersMap.set(player, index));
 
-    let sumArr = [...player, ...slicePlayers];
+  [...callings].forEach((player, index) => {
+    let frontplayerIndex = playersMap.get(player) - 1; // 2
+    let frontplayer = players[frontplayerIndex]; // poe
 
-    players.splice(index - 1); // 현재 players ['mumu', 'soe']
+    players[frontplayerIndex] = player;
+    players[frontplayerIndex + 1] = frontplayer;
 
-    players.push(...sumArr);
-  }
+    playersMap.set(player, playersMap.get(player) - 1);
+    playersMap.set(frontplayer, playersMap.get(frontplayer) + 1);
+  });
 
-  return players;
+  [...playersMap].sort((a, b) => a[1] - b[1]).map((arr) => answer.push(arr[0]));
+
+  return answer;
 }
 
 console.log(solution(players, callings));
