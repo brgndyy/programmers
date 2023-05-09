@@ -1,6 +1,4 @@
-const n = 7;
-
-function fibonaci(n) {}
+function solution(n) {}
 
 console.log(solution(n));
 
