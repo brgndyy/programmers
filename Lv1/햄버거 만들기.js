@@ -4,20 +4,18 @@ function solution(ingredient) {
   let stack = [];
   let count = 0;
 
-  [...ingredient].forEach((num) => {
-    stack.push(num);
+  for (let x of ingredient) {
+    stack.push(x);
 
-    if (stack.length >= 4) {
-      let joinStack = stack.slice(-4).join("");
-      if (joinStack === "1231") {
-        count++;
-        stack.pop();
-        stack.pop();
-        stack.pop();
-        stack.pop();
-      }
+    if (stack.length === 4 && stack.join("") === "1231") {
+      stack.pop();
+      stack.pop();
+      stack.pop();
+      stack.pop();
+
+      count++;
     }
-  });
+  }
 
   return count;
 }

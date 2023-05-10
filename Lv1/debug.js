@@ -1,28 +1,23 @@
-const X = "12321";
-const Y = "42531";
+const ingredient = [2, 1, 1, 2, 3, 1, 2, 3, 1];
 
-function solution(X, Y) {
-  let splitX = X.split("");
-  let splitY = Y.split("");
-  let answerArr = [];
-  let answer = "";
+function solution(ingredient) {
+  let stack = [];
+  let count = 0;
 
-  for (let i = 0; i <= 9; i++) {
-    let filteredX = splitX.filter((numStr) => i.toString() === numStr).length; //[0, 0]
-    let filteredY = splitY.filter((numStr) => i.toString() === numStr).length; // [0]
+  for (let x of ingredient) {
+    stack.push(x);
 
-    let str = i.toString().repeat(Math.min(filteredX, filteredY));
+    if (stack.length >= 4 && stack.slice(-4).join("") === "1231") {
+      stack.pop();
+      stack.pop();
+      stack.pop();
+      stack.pop();
 
-    if (str === "") {
-      continue;
-    } else {
-      answerArr.push(Number(str));
+      count++;
     }
   }
 
-  let sortedArr = answerArr.sort((a, b) => b - a);
-
-  return sortedArr.join("");
+  return count;
 }
 
-console.log(solution(X, Y));
+console.log(solution(ingredient));
