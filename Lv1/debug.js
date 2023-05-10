@@ -1,24 +1,28 @@
-const s = "  Try he Llo world ";
+const X = "12321";
+const Y = "42531";
 
-function solution(s) {
-  let splitS = s.split(" ");
+function solution(X, Y) {
+  let splitX = X.split("");
+  let splitY = Y.split("");
+  let answerArr = [];
   let answer = "";
 
-  for (let i = 0; i < splitS.length; i++) {
-    for (let j = 0; j < splitS[i].length; j++) {
-      if (j % 2 === 0) {
-        answer += splitS[i][j].toUpperCase();
-      } else {
-        answer += splitS[i][j].toLowerCase();
-      }
-    }
+  for (let i = 0; i <= 9; i++) {
+    let filteredX = splitX.filter((numStr) => i.toString() === numStr).length; //[0, 0]
+    let filteredY = splitY.filter((numStr) => i.toString() === numStr).length; // [0]
 
-    if (i < splitS.length - 1) {
-      answer += " ";
+    let str = i.toString().repeat(Math.min(filteredX, filteredY));
+
+    if (str === "") {
+      continue;
+    } else {
+      answerArr.push(Number(str));
     }
   }
 
-  return answer;
+  let sortedArr = answerArr.sort((a, b) => b - a);
+
+  return sortedArr.join("");
 }
 
-console.log(solution(s));
+console.log(solution(X, Y));

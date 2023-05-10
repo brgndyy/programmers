@@ -1,11 +1,6 @@
-const X = "100";
-const Y = "123450";
+const X = "5525";
+const Y = "1255";
 
-function solution(X, Y) {
-  let sortX = X.split("").sort((a, b) => Number(b) - Number(a));
-  let sortY = Y.split("").sort((a, b) => Number(b) - Number(a));
-
-  return sortY;
-}
+function solution(X, Y) {}
 
 console.log(solution(X, Y));
