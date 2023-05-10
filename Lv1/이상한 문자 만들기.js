@@ -1,17 +1,26 @@
-const s = "try hello world";
+const s = "  Try he Llo world ";
 
 function solution(s) {
   let splitS = s.split(" ");
-  let answer = [];
+  let answer = "";
 
-  for (let i = 0; i < splitS.length; i++) {
-    for (let j = 0; j < splitS[i].length; j++) {
-      if (j % 2 === 0) {
-        answer += splitS[i][j].toUpperCase();
+  for (let x of splitS) {
+    if (x === "") {
+      answer += " ";
+      continue;
+    }
+
+    let splitWord = x.split("");
+
+    for (let i = 0; i < splitWord.length; i++) {
+      if (i % 2 === 0) {
+        splitWord[i] = splitWord[i].toUpperCase();
       } else {
-        answer += splitS[i][j];
+        splitWord[i] = splitWord[i].toLowerCase();
       }
     }
+
+    answer += splitWord.join("");
   }
 
   return answer;

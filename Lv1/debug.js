@@ -1,50 +1,24 @@
-const park = ["OSO", "OOO", "OXO", "OOO"];
-const routes = ["E 2", "S 3", "W 1"];
+const s = "  Try he Llo world ";
 
-function solution(park, routes) {
-  // 시작점 구하기
-  let answer = [];
-  let newPark = park.map((arr) => arr.split(""));
-  let wLength = newPark[0].length;
-  let hLength = newPark.length;
-  let startPos = []; // [0, 1];
-  newPark.forEach((pos, index) => {
-    if (pos.includes("S")) {
-      startPos.push(index, pos.indexOf("S"));
-    }
-  });
+function solution(s) {
+  let splitS = s.split(" ");
+  let answer = "";
 
-  let direction = {
-    E: [0, 1],
-    W: [0, -1],
-    S: [1, 0],
-    N: [-1, 0],
-  };
-
-  let movePos = [...routes].map((route) => route.split(" "));
-
-  for (let i = 0; i < movePos.length; i++) {
-    let direc = movePos[i][0];
-    let direcNum = Number(movePos[i][1]);
-    let [nx, ny] = startPos;
-
-    for (let j = 1; j <= direcNum; j++) {
-      nx += direction[direc][0];
-      ny += direction[direc][0];
-
-      if (
-        nx >= 0 &&
-        ny >= 0 &&
-        nx < wLength &&
-        ny < hLength &&
-        newPark[nx][ny] !== "X"
-      ) {
-        answer = [nx, ny];
+  for (let i = 0; i < splitS.length; i++) {
+    for (let j = 0; j < splitS[i].length; j++) {
+      if (j % 2 === 0) {
+        answer += splitS[i][j].toUpperCase();
+      } else {
+        answer += splitS[i][j].toLowerCase();
       }
+    }
+
+    if (i < splitS.length - 1) {
+      answer += " ";
     }
   }
 
   return answer;
 }
 
-console.log(solution(park, routes));
+console.log(solution(s));
