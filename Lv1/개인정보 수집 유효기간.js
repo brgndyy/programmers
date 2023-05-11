@@ -8,33 +8,31 @@ const privacies = [
 ];
 
 function solution(today, terms, privacies) {
-  var answer = [];
+  let todayDate = new Date(today);
+  let answer = [];
 
-  let termsMap = new Map();
-  let todayDate = today.split(".").map((str) => Number(str));
+  let newTerms = terms.map((arr) => {
+    let type = arr.split(" ")[0];
+    let num = Number(arr.split(" ")[1]);
 
-  let [todayYear, todayMonth, todayDay] = [
-    todayDate[0],
-    todayDate[1],
-    todayDate[2],
-  ];
-
-  // 약관 기간 설정해주기
-  terms.map((terms) => {
-    let [termSplit, peroid] = [
-      terms.split(" ")[0],
-      Number(terms.split(" ")[1]),
-    ];
-
-    termsMap.set(termSplit, peroid);
+    return [type, num];
   });
 
-  for (let i = 0; i < privacies.length; i++) {
-    let date = privacies[i].split(" ")[0].split(".");
-    let termType = privacies[i].split(" ")[1];
-  }
+  privacies.forEach((str, index) => {
+    let date = str.split(" ")[0];
+    let privacyDate = new Date(date);
+    let type = str.split(" ")[1];
 
-  return todayMonth;
+    let termPeroid = newTerms.filter((arr) => arr[0] === type)[1]; //6
+
+    privacyDate.setMonth(privacyDate.getMonth() + termPeroid);
+
+    if (privacyDate <= todayDate) {
+      answer.push(index + 1);
+    }
+  });
+
+  return answer;
 }
 
 console.log(solution(today, terms, privacies));

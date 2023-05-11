@@ -1,23 +1,55 @@
-const ingredient = [2, 1, 1, 2, 3, 1, 2, 3, 1];
+const keymap = ["BCD", "ABC"];
+const targets = ["CAD", "BC"];
 
-function solution(ingredient) {
-  let stack = [];
-  let count = 0;
+function solution(keymap, targets) {
+  const answer = [];
+  const map = new Map();
 
-  for (let x of ingredient) {
-    stack.push(x);
-
-    if (stack.length >= 4 && stack.slice(-4).join("") === "1231") {
-      stack.pop();
-      stack.pop();
-      stack.pop();
-      stack.pop();
-
-      count++;
+  for (const key of keymap) {
+    for (let i = 0; i < key.length; i++) {
+      if (!map.has(key[i]) || i + 1 < map.get(key[i])) {
+        map.set(key[i], i + 1);
+      }
     }
   }
 
-  return count;
+  return map;
 }
 
-console.log(solution(ingredient));
+console.log(solution(keymap, targets));
+
+// 5
+// 1
+// 2  => 5
+// 1, 4  => 1 ,3 ,4
+// 2
+// 1
+//        => 2, 4, 5
+// 1
+//  1개
+//
+
+function draw1(number) {
+  if (number === 0) {
+    return;
+  }
+
+  draw1(number - 1);
+
+  for (let i = 0; i < number; i++) {
+    console.log("*");
+  }
+  console.log("\n");
+}
+
+function draw2(number) {
+  for (let i = 0; i < number; i++) {
+    for (let j = 0; j < i; j++) {
+      console.log("*");
+    }
+    console.log("\n");
+  }
+}
+
+draw1(5);
+draw2(5);

@@ -1,27 +1,30 @@
-const keymap = ["ABACD", "BCEFD"];
-const targets = ["ZACD", "AABB"];
+const keymap = ["ABACD", "BCAFD"];
+const targets = ["AZCD", "AABB"];
 
 function solution(keymap, targets) {
   let answer = [];
 
-  for (let i = 0; i < targets.length; i++) {
-    let splitTarget = targets[i].split("");
-    let count = 0;
-    let minKeyNum = [];
+  targets.forEach((target) => {
+    let splitTarget = target.split("");
+    let indexSum = 0;
+    let sum = 0;
 
-    for (let j = 0; j < splitTarget.length; j++) {
-      for (let k = 0; k < keymap.length; k++) {
-        minKeyNum.push(keymap[k].indexOf(splitTarget[j]));
-      }
-      let filterMinKeyNum = minKeyNum.filter((num) => num > -1);
+    for (let i = 0; i < splitTarget.length; i++) {
+      let indexArr = [];
 
-      if (filterMinKeyNum.length === 0) {
-        count += -1;
-      } else {
-        c;
+      for (let j = 0; j < keymap.length; j++) {
+        if (keymap[j].indexOf(splitTarget[i]) === -1) {
+          continue;
+        } else {
+          indexArr.push(keymap[j].indexOf(splitTarget[i]));
+        }
       }
+
+      sum += Math.min(...indexArr) + 1;
     }
-  }
+
+    answer.push(sum);
+  });
 }
 
 console.log(solution(keymap, targets));
