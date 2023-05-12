@@ -5,19 +5,16 @@ function solution(n) {
 
   for (let i = 1; i <= n; i++) {
     let sum = 0;
-    let count = i;
+    let count = 1;
 
-    while (sum <= n) {
+    while (sum <= 15) {
       sum += count;
-      count++;
 
-      if (sum >= n) {
-        break;
-      }
+      count++;
     }
 
-    if (sum === n) {
-      answer++;
+    if (sum === 15) {
+      answr++;
     }
   }
 
@@ -25,3 +22,5 @@ function solution(n) {
 }
 
 console.log(solution(n));
+
+// 반복문을 돌면서 1,  2, 3 부터 더해짐

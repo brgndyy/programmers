@@ -16,6 +16,7 @@ function solution(n) {
 
     return res;
   }
+  수;
 
   return Number(fib(n) % BigInt(1234567));
 }
