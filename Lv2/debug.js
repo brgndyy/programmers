@@ -1,27 +1,20 @@
-const n = 15;
+let n = 3;
 
 function solution(n) {
-  var answer = 0;
+  let answer = [];
 
-  for (let i = 1; i <= n; i++) {
-    let sum = 0;
-    let count = i;
-
-    while (sum <= n) {
-      sum += count;
-      count++;
-
-      if (sum >= n) {
-        break;
-      }
-    }
-
-    if (sum === n) {
-      answer++;
+  for (let i = 0; i <= n; i++) {
+    if (i === 0) {
+      answer.push(0);
+    } else if (i <= 2) {
+      answer.push(1);
+    } else {
+      let sum = answer[i - 1] + answer[i - 2];
+      answer.push(sum % 1234567);
     }
   }
 
-  return answer;
+  return answer[n];
 }
 
 console.log(solution(n));
