@@ -1,27 +1,46 @@
-const players = ["mumu", "soe", "poe", "kai", "mine"];
-const callings = ["kai", "kai", "mine", "mine"];
+const maps = [
+  [1, 0, 1, 1, 1],
+  [1, 1, 0, 0, 1],
+  [1, 0, 1, 1, 1],
+  [1, 0, 1, 1, 1],
+  [1, 1, 1, 0, 1],
+];
 
-function solution(players, callings) {
-  let playersMap = new Map();
-  let playerArr = [...players];
-  let answer = [];
+function solution(maps) {
+  let queue = [];
 
-  playerArr.forEach((player, index) => playersMap.set(player, index));
+  // 동 서  남 북  방향
+  let xPos = [1, -1, 0, 0];
+  let yPos = [0, 0, 1, -1];
 
-  [...callings].forEach((player, index) => {
-    let frontplayerIndex = playersMap.get(player) - 1; // 2
-    let frontplayer = players[frontplayerIndex]; // poe
+  let curPos = [0, 0, 1];
+  queue.push(curPos);
 
-    players[frontplayerIndex] = player;
-    players[frontplayerIndex + 1] = frontplayer;
+  while (queue.length) {
+    let [x, y, move] = queue.shift();
 
-    playersMap.set(player, playersMap.get(player) - 1);
-    playersMap.set(frontplayer, playersMap.get(frontplayer) + 1);
-  });
+    if (x === 4 && y === 4) {
+      return move;
+    }
 
-  [...playersMap].sort((a, b) => a[1] - b[1]).map((arr) => answer.push(arr[0]));
+    for (let i = 0; i < 4; i++) {
+      let newX = xPos[i] + x;
+      let newY = yPos[i] + y;
 
-  return answer;
+      if (
+        newX >= 0 &&
+        newY >= 0 &&
+        newX < maps[i].length &&
+        newY < maps.length &&
+        maps[newY][newX] === 1
+      ) {
+        queue.push([newY, newX, move + 1]);
+        maps[newY][newX] = 0;
+      }
+    }
+  }
+
+  return -1;
 }
 
-console.log(solution(players, callings));
+console.log(solution(maps));
