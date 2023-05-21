@@ -8,24 +8,23 @@ const maps = [
 
 function solution(maps) {
   let queue = [];
-
-  // 동 서  남 북  방향
-  let xPos = [1, -1, 0, 0];
-  let yPos = [0, 0, 1, -1];
+  //서, 동, 남, 북 방향
+  let dy = [0, 0, 1, -1];
+  let dx = [-1, 1, 0, 0];
 
   let curPos = [0, 0, 1];
   queue.push(curPos);
 
   while (queue.length) {
-    let [x, y, move] = queue.shift();
+    let [curY, curX, move] = queue.shift();
 
-    if (x === 4 && y === 4) {
+    if (curY === maps.length - 1 && curX === maps[0].length - 1) {
       return move;
     }
 
     for (let i = 0; i < 4; i++) {
-      let newX = xPos[i] + x;
-      let newY = yPos[i] + y;
+      let newY = dy[i] + curY;
+      let newX = dx[i] + curX;
 
       if (
         newX >= 0 &&
