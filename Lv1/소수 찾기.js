@@ -1,6 +1,6 @@
 const n = 16;
 
-function sosu(n) {}
+function solution(n) {}
 
 console.log(solution(n));
 
