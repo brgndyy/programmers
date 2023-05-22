@@ -1,55 +1,32 @@
-const keymap = ["BCD", "ABC"];
-const targets = ["CAD", "BC"];
+const dartResult = "1S*2T*3S";
 
-function solution(keymap, targets) {
-  const answer = [];
-  const map = new Map();
+function solution(dartResult) {
+  let temp = 0;
+  let answer = [];
 
-  for (const key of keymap) {
-    for (let i = 0; i < key.length; i++) {
-      if (!map.has(key[i]) || i + 1 < map.get(key[i])) {
-        map.set(key[i], i + 1);
+  for (let i = 0; i < dartResult.length; i++) {
+    if (dartResult[i] > 0 && dartResult[i] <= 9) {
+      if ((dartResult[i] === 1) & (dartResult[i + 1] === 0)) {
+        temp = 10;
+        i++;
+      } else {
+        temp = Number(dartResult[i]);
       }
+    } else if (dartResult[i] === "S") {
+      answer.push(temp);
+    } else if (dartResult[i] === "D") {
+      answer.push(Math.pow(temp, 2));
+    } else if (dartResult[i] === "T") {
+      answer.push(Math.pow(temp, 3));
+    } else if (dartResult[i] === "#") {
+      answer[answer.length - 1] *= -1;
+    } else if (dartResult[i] === "*") {
+      answer[answer.length - 1] *= 2;
+      answer[answer.length - 2] *= 2;
     }
   }
 
-  return map;
+  return answer.reduce((a, b) => a + b, 0);
 }
 
-console.log(solution(keymap, targets));
-
-// 5
-// 1
-// 2  => 5
-// 1, 4  => 1 ,3 ,4
-// 2
-// 1
-//        => 2, 4, 5
-// 1
-//  1개
-//
-
-function draw1(number) {
-  if (number === 0) {
-    return;
-  }
-
-  draw1(number - 1);
-
-  for (let i = 0; i < number; i++) {
-    console.log("*");
-  }
-  console.log("\n");
-}
-
-function draw2(number) {
-  for (let i = 0; i < number; i++) {
-    for (let j = 0; j < i; j++) {
-      console.log("*");
-    }
-    console.log("\n");
-  }
-}
-
-draw1(5);
-draw2(5);
+console.log(solution(dartResult));
