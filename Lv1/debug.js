@@ -1,25 +1,30 @@
-const babbling = ["ayawoomaaya", "uuu", "yeye", "yemawooaya", "ayaayaaya"];
+const s = "aaabbaccccabbac";
 
-function solution(babbling) {
-  let babbles = ["aya", "ye", "woo", "ma"];
-
+function solution(s) {
+  let sameStack = [];
+  let diffStack = [];
   let count = 0;
+  let splitS = s.split("");
 
-  for (let i = 0; i < babbling.length; i++) {
-    for (let j = 0; j < babbles.length; j++) {
-      if (babbling[i].includes(babbles[j].repeat(2))) {
-        continue;
-      } else {
-        babbling[i] = babbling[i].split(babbles[j]).join("");
-      }
+  sameStack.push(splitS[0]);
+
+  for (let i = 1; i < splitS.length; i++) {
+    if (sameStack.length === 0 && diffStack.length === 0) {
+      sameStack.push(splitS[i]);
+    } else if (sameStack[sameStack.length - 1] === splitS[i]) {
+      sameStack.push(splitS[i]);
+    } else {
+      diffStack.push(splitS[i]);
     }
 
-    if (babbling[i] === "") {
+    if (sameStack.length === diffStack.length) {
       count++;
+      sameStack = [];
+      diffStack = [];
     }
   }
 
-  return count;
+  return sameStack.length > 0 ? sameStack.length + count : count;
 }
 
-console.log(solution(babbling));
+console.log(solution(s));
