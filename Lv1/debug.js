@@ -1,32 +1,25 @@
-const dartResult = "1S*2T*3S";
+const babbling = ["ayawoomaaya", "uuu", "yeye", "yemawooaya", "ayaayaaya"];
 
-function solution(dartResult) {
-  let temp = 0;
-  let answer = [];
+function solution(babbling) {
+  let babbles = ["aya", "ye", "woo", "ma"];
 
-  for (let i = 0; i < dartResult.length; i++) {
-    if (dartResult[i] > 0 && dartResult[i] <= 9) {
-      if ((dartResult[i] === 1) & (dartResult[i + 1] === 0)) {
-        temp = 10;
-        i++;
+  let count = 0;
+
+  for (let i = 0; i < babbling.length; i++) {
+    for (let j = 0; j < babbles.length; j++) {
+      if (babbling[i].includes(babbles[j].repeat(2))) {
+        continue;
       } else {
-        temp = Number(dartResult[i]);
+        babbling[i] = babbling[i].split(babbles[j]).join("");
       }
-    } else if (dartResult[i] === "S") {
-      answer.push(temp);
-    } else if (dartResult[i] === "D") {
-      answer.push(Math.pow(temp, 2));
-    } else if (dartResult[i] === "T") {
-      answer.push(Math.pow(temp, 3));
-    } else if (dartResult[i] === "#") {
-      answer[answer.length - 1] *= -1;
-    } else if (dartResult[i] === "*") {
-      answer[answer.length - 1] *= 2;
-      answer[answer.length - 2] *= 2;
+    }
+
+    if (babbling[i] === "") {
+      count++;
     }
   }
 
-  return answer.reduce((a, b) => a + b, 0);
+  return count;
 }
 
-console.log(solution(dartResult));
+console.log(solution(babbling));
