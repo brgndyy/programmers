@@ -16,12 +16,6 @@ function solution(s) {
     } else {
       diffStack.push(splitS[i]);
     }
-
-    if (sameStack.length === diffStack.length) {
-      count++;
-      sameStack = [];
-      diffStack = [];
-    }
   }
 
   return sameStack.length > 0 ? sameStack.length + count : count;
