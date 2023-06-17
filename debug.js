@@ -15,15 +15,22 @@ function solution(s) {
       if (tempStr === nextStr) {
         cnt += 1;
       } else {
-        if (cnt === 1) str = str + tempStr;
-        else str = str + cnt + tempStr;
+        if (cnt === 1) {
+          str = str + tempStr;
+        } else {
+          str = str + cnt + tempStr;
+        }
 
         cnt = 1;
         tempStr = nextStr;
       }
     }
-    if (cnt === 1) str = str + tempStr;
-    else str = str + cnt + tempStr;
+
+    if (cnt === 1) {
+      str = str + tempStr;
+    } else {
+      str = str + cnt + tempStr;
+    }
     answer = Math.min(answer, str.length);
   }
 
