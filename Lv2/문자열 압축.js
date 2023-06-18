@@ -1,4 +1,4 @@
-const s = "abcabcabcabcdededededede";
+const s = `aabbaccc`;
 
 function solution(s) {
   let answer = s.length;
