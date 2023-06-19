@@ -1,263 +1,116 @@
-const input = `CIRCLE YELLOW GRAY
-CIRCLE RED BLACK
-CIRCLE RED GRAY
-CIRCLE YELLOW BLACK
-CIRCLE RED WHITE
-CIRCLE BLUE BLACK
-SQUARE YELLOW GRAY
-SQUARE BLUE GRAY
-TRIANGLE BLUE WHITE
-9
-H 1 6 5
-H 7 8 9
-H 2 3 5
-H 1 5 6
-H 6 8 9
-G
-H 2 4 6
-H 9 7 2
-G`.split("\n");
+const input = `4 6
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 1 0 6 0
+0 0 0 0 0 0`.split("\n");
 
-let shapeArr = [];
-for (let i = 0; i < 9; i++) {
-  let shape = input.shift().split(" ");
-  shapeArr.push(shape);
-}
+let [N, M] = input
+  .shift()
+  .split(" ")
+  .map((str) => Number(str));
 
-let n = Number(input.shift());
-let gameRecord = [];
+let board = input.map((str) => str.split(" ").map((str) => Number(str)));
 
-for (let i = 0; i < n; i++) {
-  let record = input.shift().split(" ");
+function solution(N, M, board) {
+  for (let i = 0; i < N; i++) {
+    for (let j = 0; j < M; j++) {
+      if (board[i][j] === 1) {
+        let maxDirAndCount = new Map();
+        let maxCount = 0;
+        let count = 0;
 
-  gameRecord.push(record);
-}
-
-function solution(shapeArr, n, gameRecord) {
-  let totalScore = 0;
-  let HArr = [];
-
-  for (let i = 0; i < gameRecord.length; i++) {
-    if (gameRecord[i][0] === "H") {
-      let arr = [];
-      let shape = new Set();
-      let shapeColor = new Set();
-      let bgColor = new Set();
-      let flag = true;
-
-      for (let j = 1; j < 4; j++) {
-        let num = Number(gameRecord[i][j]) - 1;
-
-        arr.push(shapeArr[num]);
-      }
-
-      for (let k = 0; k < arr.length; k++) {
-        shape.add(arr[k][0]);
-        shapeColor.add(arr[k][1]);
-        bgColor.add(arr[k][2]);
-      }
-
-      if (shape.size === 1 && shapeColor.size === 3 && bgColor.size === 3) {
-        let numArr = [
-          Number(gameRecord[i][1]),
-          Number(gameRecord[i][2]),
-          Number(gameRecord[i][3]),
-        ].sort((a, b) => a - b);
-
-        let found = HArr.some(
-          (arr) =>
-            arr.length === numArr.length &&
-            arr.every((value, index) => value === numArr[index])
-        );
-
-        if (found) {
-          totalScore -= 1;
-          break;
-        } else {
-          totalScore += 1;
-          HArr.push(numArr);
+        // 북쪽
+        let nx = i - 1;
+        let ny = j;
+        while (nx >= 0) {
+          if (board[nx][ny] === 0) {
+            nx--;
+            count++;
+          } else if (board[nx][ny] === 6) {
+            break;
+          }
         }
-      } else if (
-        shape.size === 1 &&
-        shapeColor.size === 1 &&
-        bgColor.size === 1
-      ) {
-        let numArr = [
-          Number(gameRecord[i][1]),
-          Number(gameRecord[i][2]),
-          Number(gameRecord[i][3]),
-        ].sort((a, b) => a - b);
 
-        let found = HArr.some(
-          (arr) =>
-            arr.length === numArr.length &&
-            arr.every((value, index) => value === numArr[index])
-        );
-
-        if (found) {
-          totalScore -= 1;
-          break;
-        } else {
-          totalScore += 1;
-          HArr.push(numArr);
+        if (count > maxCount) {
+          maxCount = count;
+          maxDirAndCount.clear();
+          maxDirAndCount.set("N", maxCount);
         }
-      } else if (
-        shape.size === 1 &&
-        shapeColor.size === 1 &&
-        bgColor.size === 3
-      ) {
-        let numArr = [
-          Number(gameRecord[i][1]),
-          Number(gameRecord[i][2]),
-          Number(gameRecord[i][3]),
-        ].sort((a, b) => a - b);
+        count = 0;
 
-        let found = HArr.some(
-          (arr) =>
-            arr.length === numArr.length &&
-            arr.every((value, index) => value === numArr[index])
-        );
+        // 동쪽
+        let ex = i;
+        let ey = j + 1;
 
-        if (found) {
-          totalScore -= 1;
-          break;
-        } else {
-          totalScore += 1;
-          HArr.push(numArr);
+        while (ey < M) {
+          if (board[ex][ey] === 0) {
+            ey++;
+            count++;
+          } else if (board[ex][ey] === 6) {
+            break;
+          }
         }
-      } else if (
-        shape.size === 1 &&
-        shapeColor.size === 3 &&
-        bgColor.size === 1
-      ) {
-        let numArr = [
-          Number(gameRecord[i][1]),
-          Number(gameRecord[i][2]),
-          Number(gameRecord[i][3]),
-        ].sort((a, b) => a - b);
 
-        let found = HArr.some(
-          (arr) =>
-            arr.length === numArr.length &&
-            arr.every((value, index) => value === numArr[index])
-        );
-
-        if (found) {
-          totalScore -= 1;
-          break;
-        } else {
-          totalScore += 1;
-          HArr.push(numArr);
+        if (count > maxCount) {
+          maxCount = count;
+          maxDirAndCount.clear();
+          maxDirAndCount.set("E", maxCount);
         }
-      } else if (
-        shape.size === 3 &&
-        shapeColor.size === 3 &&
-        bgColor.size === 3
-      ) {
-        let numArr = [
-          Number(gameRecord[i][1]),
-          Number(gameRecord[i][2]),
-          Number(gameRecord[i][3]),
-        ].sort((a, b) => a - b);
+        count = 0;
 
-        let found = HArr.some(
-          (arr) =>
-            arr.length === numArr.length &&
-            arr.every((value, index) => value === numArr[index])
-        );
+        // 남쪽
 
-        if (found) {
-          totalScore -= 1;
-          break;
-        } else {
-          totalScore += 1;
-          HArr.push(numArr);
+        let sx = i + 1;
+        let sy = j;
+
+        while (sx < N) {
+          if (board[sx][sy] === 0) {
+            sx++;
+            count++;
+          } else if (board[sx][sy] === 6) {
+            break;
+          }
         }
-      } else if (
-        shape.size === 3 &&
-        shapeColor.size === 1 &&
-        bgColor.size === 1
-      ) {
-        let numArr = [
-          Number(gameRecord[i][1]),
-          Number(gameRecord[i][2]),
-          Number(gameRecord[i][3]),
-        ].sort((a, b) => a - b);
 
-        let found = HArr.some(
-          (arr) =>
-            arr.length === numArr.length &&
-            arr.every((value, index) => value === numArr[index])
-        );
-
-        if (found) {
-          totalScore -= 1;
-          break;
-        } else {
-          totalScore += 1;
-          HArr.push(numArr);
+        if (count > maxCount) {
+          maxCount = count;
+          maxDirAndCount.clear();
+          maxDirAndCount.set("S", maxCount);
         }
-      } else if (
-        shape.size === 3 &&
-        shapeColor.size === 3 &&
-        bgColor.size === 1
-      ) {
-        let numArr = [
-          Number(gameRecord[i][1]),
-          Number(gameRecord[i][2]),
-          Number(gameRecord[i][3]),
-        ].sort((a, b) => a - b);
+        count = 0;
 
-        let found = HArr.some(
-          (arr) =>
-            arr.length === numArr.length &&
-            arr.every((value, index) => value === numArr[index])
-        );
+        // 서쪽
 
-        if (found) {
-          totalScore -= 1;
-          break;
-        } else {
-          totalScore += 1;
-          HArr.push(numArr);
+        let wx = i;
+        let wy = j - 1;
+
+        while (wy >= 0) {
+          if (board[wx][wy] === 0) {
+            count++;
+            wy--;
+          } else if (board[wx][wy] === 6) {
+            break;
+          }
         }
-      } else if (
-        shape.size === 3 &&
-        shapeColor.size === 1 &&
-        bgColor.size === 3
-      ) {
-        let numArr = [
-          Number(gameRecord[i][1]),
-          Number(gameRecord[i][2]),
-          Number(gameRecord[i][3]),
-        ].sort((a, b) => a - b);
 
-        let found = HArr.some(
-          (arr) =>
-            arr.length === numArr.length &&
-            arr.every((value, index) => value === numArr[index])
-        );
-
-        if (found) {
-          totalScore -= 1;
-          break;
-        } else {
-          totalScore += 1;
-          HArr.push(numArr);
+        if (count > maxCount) {
+          maxCount = count;
+          maxDirAndCount.clear();
+          maxDirAndCount.set("W", maxCount);
         }
-      }
-    } else if (gameRecord[i][1] === "G") {
-      let GScored = false;
-      if (HArr.length === 84 && !GScored) {
-        totalScore += 3;
-        GScored = true;
-      } else {
-        totalScore -= 1;
+        count = 0;
+
+        maxDirAndCount.forEach((value, key) => {
+          if (key === "N") {
+          }
+        });
+      } else if (board[i][j] === 2) {
+      } else if (board[i][j] === 3) {
+      } else if (board[i][j] === 4) {
+      } else if (board[i][j] === 5) {
       }
     }
   }
-
-  return totalScore;
 }
 
-console.log(solution(shapeArr, n, gameRecord));
+console.log(solution(N, M, board));
