@@ -1,128 +1,263 @@
-const park = ["OSO", "OOO", "OXO", "OOO"];
-const routes = ["E 2", "S 3", "W 1"];
+const input = `CIRCLE YELLOW GRAY
+CIRCLE RED BLACK
+CIRCLE RED GRAY
+CIRCLE YELLOW BLACK
+CIRCLE RED WHITE
+CIRCLE BLUE BLACK
+SQUARE YELLOW GRAY
+SQUARE BLUE GRAY
+TRIANGLE BLUE WHITE
+9
+H 1 6 5
+H 7 8 9
+H 2 3 5
+H 1 5 6
+H 6 8 9
+G
+H 2 4 6
+H 9 7 2
+G`.split("\n");
 
-function solution(park, routes) {
-  let answer = [];
-  let map = park.map((dir) => dir.split(""));
-  let startPos = [];
-
-  let dir = [
-    [-1, 0],
-    [0, 1],
-    [1, 0],
-    [0, -1],
-  ];
-
-  // 시작점 구하기
-  for (let i = 0; i < map.length; i++) {
-    for (let j = 0; j < map[0].length; j++) {
-      if (map[i][j] === "S") {
-        startPos.push(i, j);
-        break;
-      }
-    }
-  }
-  // 시작점 = [0, 1];
-
-  for (let i = 0; i < routes.length; i++) {
-    let [direction, dirNum] = [
-      routes[i].split(" ")[0],
-      Number(routes[i].split(" ")[1]),
-    ];
-    let count = 0;
-
-    if (direction === "E") {
-      while (dirNum !== 0) {
-        let nx = startPos[0] + dir[1][0];
-        let ny = startPos[1] + dir[1][1];
-
-        if (
-          nx < 0 ||
-          ny < 0 ||
-          nx >= map.length ||
-          ny >= map[0].length ||
-          map[nx][ny] === "X"
-        ) {
-          startPos[0] = startPos[0];
-          startPos[1] = startPos[1] + count * -1;
-          count = 0;
-          break;
-        } else {
-          startPos = [nx, ny];
-          count++;
-          dirNum--;
-        }
-      }
-    } else if (direction === "S") {
-      while (dirNum !== 0) {
-        let nx = startPos[0] + dir[2][0];
-        let ny = startPos[1] + dir[2][1];
-
-        if (
-          nx < 0 ||
-          ny < 0 ||
-          nx >= map.length ||
-          ny >= map[0].length ||
-          map[nx][ny] === "X"
-        ) {
-          startPos[0] = startPos[0] + count * -1;
-          startPos[1] = startPos[1];
-          count = 0;
-          break;
-        } else {
-          startPos = [nx, ny];
-          count++;
-          dirNum--;
-        }
-      }
-    } else if (direction === "W") {
-      while (dirNum !== 0) {
-        let nx = startPos[0] + dir[3][0];
-        let ny = startPos[1] + dir[3][1];
-
-        if (
-          nx < 0 ||
-          ny < 0 ||
-          nx >= map.length ||
-          ny >= map[0].length ||
-          map[nx][ny] === "X"
-        ) {
-          startPos[0] = startPos[0];
-          startPos[1] = startPos[1] + count;
-          count = 0;
-          break;
-        } else {
-          startPos = [nx, ny];
-          count++;
-          dirNum--;
-        }
-      }
-    } else if (direction === "N") {
-      while (dirNum !== 0) {
-        let nx = startPos[0] + dir[0][0];
-        let ny = startPos[1] + dir[0][1];
-
-        if (
-          nx < 0 ||
-          ny < 0 ||
-          nx >= map.length ||
-          ny >= map[0].length ||
-          map[nx][ny] === "X"
-        ) {
-          startPos[0] = startPos[0] + count;
-          startPos[1] = startPos[1];
-          count = 0;
-          break;
-        } else {
-          startPos = [nx, ny];
-          count++;
-          dirNum--;
-        }
-      }
-    }
-  }
-
-  return startPos;
+let shapeArr = [];
+for (let i = 0; i < 9; i++) {
+  let shape = input.shift().split(" ");
+  shapeArr.push(shape);
 }
 
-console.log(solution(park, routes));
+let n = Number(input.shift());
+let gameRecord = [];
+
+for (let i = 0; i < n; i++) {
+  let record = input.shift().split(" ");
+
+  gameRecord.push(record);
+}
+
+function solution(shapeArr, n, gameRecord) {
+  let totalScore = 0;
+  let HArr = [];
+
+  for (let i = 0; i < gameRecord.length; i++) {
+    if (gameRecord[i][0] === "H") {
+      let arr = [];
+      let shape = new Set();
+      let shapeColor = new Set();
+      let bgColor = new Set();
+      let flag = true;
+
+      for (let j = 1; j < 4; j++) {
+        let num = Number(gameRecord[i][j]) - 1;
+
+        arr.push(shapeArr[num]);
+      }
+
+      for (let k = 0; k < arr.length; k++) {
+        shape.add(arr[k][0]);
+        shapeColor.add(arr[k][1]);
+        bgColor.add(arr[k][2]);
+      }
+
+      if (shape.size === 1 && shapeColor.size === 3 && bgColor.size === 3) {
+        let numArr = [
+          Number(gameRecord[i][1]),
+          Number(gameRecord[i][2]),
+          Number(gameRecord[i][3]),
+        ].sort((a, b) => a - b);
+
+        let found = HArr.some(
+          (arr) =>
+            arr.length === numArr.length &&
+            arr.every((value, index) => value === numArr[index])
+        );
+
+        if (found) {
+          totalScore -= 1;
+          break;
+        } else {
+          totalScore += 1;
+          HArr.push(numArr);
+        }
+      } else if (
+        shape.size === 1 &&
+        shapeColor.size === 1 &&
+        bgColor.size === 1
+      ) {
+        let numArr = [
+          Number(gameRecord[i][1]),
+          Number(gameRecord[i][2]),
+          Number(gameRecord[i][3]),
+        ].sort((a, b) => a - b);
+
+        let found = HArr.some(
+          (arr) =>
+            arr.length === numArr.length &&
+            arr.every((value, index) => value === numArr[index])
+        );
+
+        if (found) {
+          totalScore -= 1;
+          break;
+        } else {
+          totalScore += 1;
+          HArr.push(numArr);
+        }
+      } else if (
+        shape.size === 1 &&
+        shapeColor.size === 1 &&
+        bgColor.size === 3
+      ) {
+        let numArr = [
+          Number(gameRecord[i][1]),
+          Number(gameRecord[i][2]),
+          Number(gameRecord[i][3]),
+        ].sort((a, b) => a - b);
+
+        let found = HArr.some(
+          (arr) =>
+            arr.length === numArr.length &&
+            arr.every((value, index) => value === numArr[index])
+        );
+
+        if (found) {
+          totalScore -= 1;
+          break;
+        } else {
+          totalScore += 1;
+          HArr.push(numArr);
+        }
+      } else if (
+        shape.size === 1 &&
+        shapeColor.size === 3 &&
+        bgColor.size === 1
+      ) {
+        let numArr = [
+          Number(gameRecord[i][1]),
+          Number(gameRecord[i][2]),
+          Number(gameRecord[i][3]),
+        ].sort((a, b) => a - b);
+
+        let found = HArr.some(
+          (arr) =>
+            arr.length === numArr.length &&
+            arr.every((value, index) => value === numArr[index])
+        );
+
+        if (found) {
+          totalScore -= 1;
+          break;
+        } else {
+          totalScore += 1;
+          HArr.push(numArr);
+        }
+      } else if (
+        shape.size === 3 &&
+        shapeColor.size === 3 &&
+        bgColor.size === 3
+      ) {
+        let numArr = [
+          Number(gameRecord[i][1]),
+          Number(gameRecord[i][2]),
+          Number(gameRecord[i][3]),
+        ].sort((a, b) => a - b);
+
+        let found = HArr.some(
+          (arr) =>
+            arr.length === numArr.length &&
+            arr.every((value, index) => value === numArr[index])
+        );
+
+        if (found) {
+          totalScore -= 1;
+          break;
+        } else {
+          totalScore += 1;
+          HArr.push(numArr);
+        }
+      } else if (
+        shape.size === 3 &&
+        shapeColor.size === 1 &&
+        bgColor.size === 1
+      ) {
+        let numArr = [
+          Number(gameRecord[i][1]),
+          Number(gameRecord[i][2]),
+          Number(gameRecord[i][3]),
+        ].sort((a, b) => a - b);
+
+        let found = HArr.some(
+          (arr) =>
+            arr.length === numArr.length &&
+            arr.every((value, index) => value === numArr[index])
+        );
+
+        if (found) {
+          totalScore -= 1;
+          break;
+        } else {
+          totalScore += 1;
+          HArr.push(numArr);
+        }
+      } else if (
+        shape.size === 3 &&
+        shapeColor.size === 3 &&
+        bgColor.size === 1
+      ) {
+        let numArr = [
+          Number(gameRecord[i][1]),
+          Number(gameRecord[i][2]),
+          Number(gameRecord[i][3]),
+        ].sort((a, b) => a - b);
+
+        let found = HArr.some(
+          (arr) =>
+            arr.length === numArr.length &&
+            arr.every((value, index) => value === numArr[index])
+        );
+
+        if (found) {
+          totalScore -= 1;
+          break;
+        } else {
+          totalScore += 1;
+          HArr.push(numArr);
+        }
+      } else if (
+        shape.size === 3 &&
+        shapeColor.size === 1 &&
+        bgColor.size === 3
+      ) {
+        let numArr = [
+          Number(gameRecord[i][1]),
+          Number(gameRecord[i][2]),
+          Number(gameRecord[i][3]),
+        ].sort((a, b) => a - b);
+
+        let found = HArr.some(
+          (arr) =>
+            arr.length === numArr.length &&
+            arr.every((value, index) => value === numArr[index])
+        );
+
+        if (found) {
+          totalScore -= 1;
+          break;
+        } else {
+          totalScore += 1;
+          HArr.push(numArr);
+        }
+      }
+    } else if (gameRecord[i][1] === "G") {
+      let GScored = false;
+      if (HArr.length === 84 && !GScored) {
+        totalScore += 3;
+        GScored = true;
+      } else {
+        totalScore -= 1;
+      }
+    }
+  }
+
+  return totalScore;
+}
+
+console.log(solution(shapeArr, n, gameRecord));
