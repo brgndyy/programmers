@@ -1,116 +1,89 @@
-const input = `4 6
-0 0 0 0 0 0
-0 0 0 0 0 0
-0 0 1 0 6 0
-0 0 0 0 0 0`.split("\n");
+const input = `3
+4 2 5 1 7
+3 1 9 4 5
+9 8 1 2 3
+8 1 9 3 4
+7 2 3 4 8
+1 9 2 5 7
+6 5 2 3 4
+5 1 9 2 8
+2 9 3 1 4`.split("\n");
 
-let [N, M] = input
-  .shift()
-  .split(" ")
-  .map((str) => Number(str));
+function solution(input) {
+  let N = Number(input[0]);
+  input = input.slice(1).map((v) => v.split(" ").map(Number));
+  let board = Array.from({ length: N }, () => Array(N).fill(0));
+  const dx = [1, 0, -1, 0];
+  const dy = [0, 1, 0, -1];
+  let favorites = {};
+  let students = [];
+  let answer = 0;
 
-let board = input.map((str) => str.split(" ").map((str) => Number(str)));
+  for (let x of input) {
+    students.push(x[0]);
+    favorites[x[0]] = x.slice(1);
+  }
 
-function solution(N, M, board) {
-  for (let i = 0; i < N; i++) {
-    for (let j = 0; j < M; j++) {
-      if (board[i][j] === 1) {
-        let maxDirAndCount = new Map();
-        let maxCount = 0;
-        let count = 0;
-
-        // 북쪽
-        let nx = i - 1;
-        let ny = j;
-        while (nx >= 0) {
-          if (board[nx][ny] === 0) {
-            nx--;
-            count++;
-          } else if (board[nx][ny] === 6) {
-            break;
-          }
+  for (let student of students) {
+    let candidates = {};
+    for (let row = 0; row < N; row++) {
+      for (let col = 0; col < N; col++) {
+        if (board[row][col] !== 0) continue;
+        let count = [0, 0]; // 우선 순위 수, 비어있는 칸 수,
+        for (let i = 0; i < dx.length; i++) {
+          const [nRow, nCol] = [row + dx[i], col + dy[i]];
+          if (nRow < 0 || nRow >= N || nCol < 0 || nCol >= N) continue;
+          if (favorites[student].includes(board[nRow][nCol])) count[0]++;
+          if (!board[nRow][nCol]) count[1]++;
         }
-
-        if (count > maxCount) {
-          maxCount = count;
-          maxDirAndCount.clear();
-          maxDirAndCount.set("N", maxCount);
-        }
-        count = 0;
-
-        // 동쪽
-        let ex = i;
-        let ey = j + 1;
-
-        while (ey < M) {
-          if (board[ex][ey] === 0) {
-            ey++;
-            count++;
-          } else if (board[ex][ey] === 6) {
-            break;
-          }
-        }
-
-        if (count > maxCount) {
-          maxCount = count;
-          maxDirAndCount.clear();
-          maxDirAndCount.set("E", maxCount);
-        }
-        count = 0;
-
-        // 남쪽
-
-        let sx = i + 1;
-        let sy = j;
-
-        while (sx < N) {
-          if (board[sx][sy] === 0) {
-            sx++;
-            count++;
-          } else if (board[sx][sy] === 6) {
-            break;
-          }
-        }
-
-        if (count > maxCount) {
-          maxCount = count;
-          maxDirAndCount.clear();
-          maxDirAndCount.set("S", maxCount);
-        }
-        count = 0;
-
-        // 서쪽
-
-        let wx = i;
-        let wy = j - 1;
-
-        while (wy >= 0) {
-          if (board[wx][wy] === 0) {
-            count++;
-            wy--;
-          } else if (board[wx][wy] === 6) {
-            break;
-          }
-        }
-
-        if (count > maxCount) {
-          maxCount = count;
-          maxDirAndCount.clear();
-          maxDirAndCount.set("W", maxCount);
-        }
-        count = 0;
-
-        maxDirAndCount.forEach((value, key) => {
-          if (key === "N") {
-          }
-        });
-      } else if (board[i][j] === 2) {
-      } else if (board[i][j] === 3) {
-      } else if (board[i][j] === 4) {
-      } else if (board[i][j] === 5) {
+        const key = JSON.stringify(count);
+        if (!candidates[key]) candidates[key] = [[row, col]];
+        else candidates[key].push([row, col]);
       }
     }
+    const sorted = Object.keys(candidates).sort((a, b) => {
+      const [a0, a1] = JSON.parse(a);
+      const [b0, b1] = JSON.parse(b);
+      if (a0 !== b0) return b0 - a0;
+      return b1 - a1;
+    });
+    const [newRow, newCol] = candidates[sorted[0]][0];
+    board[newRow][newCol] = student;
   }
+
+  for (let student of students) {
+    let favCount = 0;
+    for (let row = 0; row < N; row++) {
+      for (let col = 0; col < N; col++) {
+        if (board[row][col] === student) {
+          for (let i = 0; i < dx.length; i++) {
+            const [nRow, nCol] = [row + dx[i], col + dy[i]];
+            if (nRow < 0 || nRow >= N || nCol < 0 || nCol >= N) continue;
+            if (favorites[student].includes(board[nRow][nCol])) favCount++;
+          }
+        }
+      }
+    }
+    switch (favCount) {
+      case 0:
+        answer += 0;
+        break;
+      case 1:
+        answer += 1;
+        break;
+      case 2:
+        answer += 10;
+        break;
+      case 3:
+        answer += 100;
+        break;
+      case 4:
+        answer += 1000;
+        break;
+    }
+  }
+
+  return answer;
 }
 
-console.log(solution(N, M, board));
+console.log(solution(input));
