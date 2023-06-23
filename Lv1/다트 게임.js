@@ -1,5 +1,3 @@
-const dartResult = "1S2D*3T";
-
 function solution(dartResult) {
   var answer = 0;
   let scoreArr = [];
@@ -66,5 +64,3 @@ function solution(dartResult) {
 
   return scoreArr.reduce((a, b) => a + b, 0);
 }
-
-console.log(solution(dartResult));
