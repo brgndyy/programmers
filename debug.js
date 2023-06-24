@@ -1,70 +1,27 @@
-const dartResult = "1S2D*3T";
+const babblling = ["yayae"];
 
-function solution(dartResult) {
-  var answer = 0;
-  let scoreArr = [];
+function solution(babbling) {
+  let pros = ["aya", "ye", "woo", "ma"];
 
-  let num = 0;
+  let answer = 0;
 
-  let splitResult = dartResult.split("");
+  for (let i = 0; i < babbling.length; i++) {
+    let str = babbling[i];
 
-  for (let i = 0; i < splitResult.length; i++) {
-    // 숫자형으로 바꿨을때 숫자가 아니고 문자열일때
-
-    if (Number.isNaN(Number(splitResult[i]))) {
-      if (splitResult[i] === "S") {
-        if (splitResult[i + 1] === "*") {
-          scoreArr[scoreArr.length - 1] *= 2;
-          scoreArr.push(num * 2);
-          i++;
-        } else if (splitResult[i + 1] === "#") {
-          scoreArr.push(num * -1);
-          i++;
-        } else {
-          scoreArr.push(num);
-        }
-      } else if (splitResult[i] === "D") {
-        if (splitResult[i + 1] === "*") {
-          scoreArr[scoreArr.length - 1] *= 2;
-          num = num * num * 2;
-          scoreArr.push(num);
-          i++;
-        } else if (splitResult[i + 1] === "#") {
-          num = num * num * -1;
-          scoreArr.push(num);
-          i++;
-        } else {
-          num = num * num;
-          scoreArr.push(num);
-        }
-      } else if (splitResult[i] === "T") {
-        if (splitResult[i + 1] === "*") {
-          scoreArr[scoreArr.length - 1] *= 2;
-          num = num * num * num * 2;
-          scoreArr.push(num);
-          i++;
-        } else if (splitResult[i + 1] === "#") {
-          num = num * num * num * -1;
-          scoreArr.push(num);
-          i++;
-        } else {
-          num = num * num * num;
-          scoreArr.push(num);
-        }
-      }
-
-      num = 0;
-    } else {
-      if (splitResult[i] === "1" && splitResult[i + 1] === "0") {
-        num += 10;
-        i++;
+    for (let j = 0; j < pros.length; j++) {
+      if (str.includes(pros[j].repeat(2))) {
+        continue;
       } else {
-        num += Number(splitResult[i]);
+        str = str.split(pros[j]).join(" ");
       }
+    }
+
+    if (str.split(" ").join("") === "") {
+      answer++;
     }
   }
 
-  return scoreArr.reduce((a, b) => a + b, 0);
+  return answer;
 }
 
-console.log(solution(dartResult));
+console.log(solution(babblling));

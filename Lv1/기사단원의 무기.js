@@ -1,31 +1,28 @@
-const number = 10;
-const limit = 3;
-const power = 2;
-
 function solution(number, limit, power) {
-  let knights = Array.from({ length: number }, (_, index) => index + 1);
+  let result = 0;
+  let numArr = [];
 
-  let measureArr = [];
-
-  for (let i = 0; i < knights.length; i++) {
+  for (let i = 1; i <= number; i++) {
+    let num = i;
     let count = 0;
 
-    for (let j = 1; j <= Math.ceil(knights[i] / 2); j++) {
-      if (knights[i] % j === 0) {
-        if (knights[i] / j === j) {
-          count += 1;
+    for (let j = 1; j <= Math.sqrt(num); j++) {
+      if (num % j === 0) {
+        if (num / j === j) {
+          count++;
         } else {
           count += 2;
         }
       }
     }
-
-    measureArr.push(count);
+    numArr.push(count);
   }
 
-  let filterArr = measureArr.map((num) => (num > limit ? (num = power) : num));
+  for (let i = 0; i < number; i++) {
+    if (numArr[i] > limit) {
+      numArr[i] = power;
+    }
+  }
 
-  return filterArr.reduce((a, b) => a + b, 0);
+  return numArr.reduce((a, b) => a + b, 0);
 }
-
-console.log(solution(number, limit, power));

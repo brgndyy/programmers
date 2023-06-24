@@ -1,25 +1,27 @@
-const babbling = ["ayawoomaaya", "uuu", "yeye", "yemawooaya", "ayaayaaya"];
+const babblling = ["yayae"];
 
 function solution(babbling) {
-  let babbles = ["aya", "ye", "woo", "ma"];
+  let pros = ["aya", "ye", "woo", "ma"];
 
-  let count = 0;
+  let answer = 0;
 
   for (let i = 0; i < babbling.length; i++) {
-    for (let j = 0; j < babbles.length; j++) {
-      if (babbling[i].includes(babbles[j].repeat(2))) {
+    let str = babbling[i];
+
+    for (let j = 0; j < pros.length; j++) {
+      if (str.includes(pros[j].repeat(2))) {
         continue;
       } else {
-        babbling[i].split(babbles[j]);
+        str = str.split(pros[j]).join("");
       }
     }
 
-    if (babbling[i].join("").length === 1) {
-      count++;
+    if (str === "") {
+      answer++;
     }
   }
 
-  return count;
+  return answer;
 }
 
-console.log(solution(babbling));
+console.log(solution(babblling));
