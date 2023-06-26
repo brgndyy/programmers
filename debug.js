@@ -1,37 +1,21 @@
-const keymap = ["ABACD", "BCEFD"];
-const targets = ["ABCD", "AABB"];
+const n = 8;
+const m = 4;
+const section = [2, 3, 6];
 
-function solution(keymap, targets) {
-  let answer = [];
+function solution(n, m, section) {
+  let answer = 0;
 
-  for (let i = 0; i < targets.length; i++) {
-    let splitTarget = targets[i].split("");
-    let sum = 0;
+  let part = 0;
 
-    for (let j = 0; j < splitTarget.length; j++) {
-      let minIndex = Number.MAX_SAFE_INTEGER;
+  for (let i = 0; i < section.length; i++) {
+    if (section[i] > part) {
+      part = section[i] + m - 1;
 
-      for (let k = 0; k < keymap.length; k++) {
-        let index = keymap[k].indexOf(splitTarget[j]) + 1;
-
-        if (index === 0) {
-          continue;
-        } else if (minIndex > index) {
-          minIndex = index;
-        }
-      }
-
-      if (minIndex === Number.MAX_SAFE_INTEGER) {
-        sum = -1;
-      } else {
-        sum += minIndex;
-      }
+      answer++;
     }
-
-    answer.push(sum);
   }
 
   return answer;
 }
 
-console.log(solution(keymap, targets));
+console.log(solution(n, m, section));
