@@ -1,6 +1,3 @@
-const MOD = 1000000007;
-const n = 6;
-
 function solution(n) {
   const dp = [0, 3, 11];
   const idx = Math.floor(n / 2);
@@ -24,5 +21,3 @@ function solution(n) {
 
   return dp[idx];
 }
-
-console.log(solution(n));
