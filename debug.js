@@ -1,21 +1,47 @@
-const n = 8;
-const m = 4;
-const section = [2, 3, 6];
+const maps = [
+  [1, 0, 1, 1, 1],
+  [1, 0, 1, 0, 1],
+  [1, 0, 1, 1, 1],
+  [1, 1, 1, 0, 1],
+  [0, 0, 0, 0, 1],
+];
 
-function solution(n, m, section) {
-  let answer = 0;
+function solution(maps) {
+  var answer = 0;
 
-  let part = 0;
+  // 시작점, 움직인 횟수
+  let movePos = [0, 0, 1];
 
-  for (let i = 0; i < section.length; i++) {
-    if (section[i] > part) {
-      part = section[i] + m - 1;
+  let dir = [
+    [-1, 0],
+    [0, 1],
+    [1, 0],
+    [0, -1],
+  ];
 
-      answer++;
+  let queue = [];
+
+  queue.push(movePos);
+
+  while (queue.length) {
+    let [x, y, move] = queue.shift();
+
+    if (x === 4 && y === 4) {
+      return move;
+    }
+
+    for (let i = 0; i < 4; i++) {
+      let nx = x + dir[i][0];
+      let ny = y + dir[i][1];
+
+      if (nx >= 0 && ny >= 0 && nx < 5 && ny < 5 && maps[nx][ny] === 1) {
+        queue.push([nx, ny, move + 1]);
+        maps[nx][ny] = 0;
+      }
     }
   }
 
-  return answer;
+  return -1;
 }
 
-console.log(solution(n, m, section));
+console.log(solution(maps));

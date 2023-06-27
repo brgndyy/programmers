@@ -1,20 +1,27 @@
 const maps = [
   [1, 0, 1, 1, 1],
-  [1, 1, 0, 0, 1],
-  [1, 0, 1, 1, 1],
+  [1, 0, 1, 0, 1],
   [1, 0, 1, 1, 1],
   [1, 1, 1, 0, 1],
+  [0, 0, 0, 0, 1],
 ];
 
 function solution(maps) {
+  var answer = 0;
+
+  // 시작점, 움직인 횟수
+  let movePos = [0, 0, 0];
+
+  let dir = [
+    [-1, 0],
+    [0, 1],
+    [1, 0],
+    [0, -1],
+  ];
+
   let queue = [];
 
-  // 동 서  남 북  방향
-  let xPos = [1, -1, 0, 0];
-  let yPos = [0, 0, 1, -1];
-
-  let curPos = [0, 0, 1];
-  queue.push(curPos);
+  queue.push(movePos);
 
   while (queue.length) {
     let [x, y, move] = queue.shift();
@@ -24,18 +31,12 @@ function solution(maps) {
     }
 
     for (let i = 0; i < 4; i++) {
-      let newX = xPos[i] + x;
-      let newY = yPos[i] + y;
+      let nx = x + dir[i][0];
+      let ny = y + dir[i][1];
 
-      if (
-        newX >= 0 &&
-        newY >= 0 &&
-        newX < maps[i].length &&
-        newY < maps.length &&
-        maps[newX][newY] === 1
-      ) {
-        queue.push([newX, newY, move++]);
-        maps[(newX, newY)] = 0;
+      if (nx >= 0 && ny >= 0 && nx < 5 && ny < 5 && maps[nx][ny] !== 0) {
+        queue.push([nx, ny, move++]);
+        maps[nx][ny] = 0;
       }
     }
   }
