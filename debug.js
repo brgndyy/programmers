@@ -1,28 +1,25 @@
-const MOD = 1000000007;
-const n = 6;
+const board = [
+  [0, 1, 1, 1],
+  [1, 1, 1, 1],
+  [1, 1, 1, 1],
+  [0, 0, 1, 0],
+];
 
-function solution(n) {
-  const dp = [0, 3, 11];
-  const idx = Math.floor(n / 2);
+function solution(board) {
+  const row = board.length;
+  const col = board[0].length;
 
-  if (n % 2 !== 0) {
-    return 0;
-  }
-  if (idx < 3) {
-    return dp[idx];
-  }
+  if (row < 2 || col < 2) return 1;
 
-  for (let i = 3; i <= idx; i++) {
-    dp[i] = dp[i - 1] * 3 + 2;
-
-    for (let j = 1; j < i - 1; j++) {
-      dp[i] += dp[j] * 2;
+  for (let i = 1; i < row; i++) {
+    for (let j = 1; j < col; j++) {
+      if (board[i][j] === 1) {
+        board[i][j] =
+          Math.min(board[i][j - 1], board[i - 1][j], board[i - 1][j - 1]) + 1;
+      }
     }
-
-    dp[i] %= MOD;
   }
-
-  return dp[idx];
+  return Math.max(...board.reduce((ac, v) => [...ac, Math.max(...v)], [])) ** 2;
 }
 
-console.log(solution(n));
+console.log(solution(board));
