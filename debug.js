@@ -6,20 +6,19 @@ const board = [
 ];
 
 function solution(board) {
-  const row = board.length;
-  const col = board[0].length;
+  let N = board.length;
+  let M = board[0].length;
 
-  if (row < 2 || col < 2) return 1;
-
-  for (let i = 1; i < row; i++) {
-    for (let j = 1; j < col; j++) {
+  for (let i = 1; i < N; i++) {
+    for (let j = 1; j < M; j++) {
       if (board[i][j] === 1) {
         board[i][j] =
-          Math.min(board[i][j - 1], board[i - 1][j], board[i - 1][j - 1]) + 1;
+          Math.min(board[i - 1][j], board[i][j - 1], board[i - 1][j - 1]) + 1;
       }
     }
   }
-  return Math.max(...board.reduce((ac, v) => [...ac, Math.max(...v)], [])) ** 2;
+
+  return board;
 }
 
 console.log(solution(board));
