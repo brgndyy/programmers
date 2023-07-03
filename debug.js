@@ -1,33 +1,32 @@
-const arr1 = [
-  [1, 4],
-  [3, 2],
-  [4, 1],
-];
-const arr2 = [
-  [3, 3],
-  [3, 3],
-];
+const s = "3people  unFollowed me";
 
-function solution(arr1, arr2) {
+function solution(s) {
   let answer = [];
 
-  for (let i = 0; i < arr1.length; i++) {
-    let numArr = [];
+  let splitS = s.split(" ");
 
-    for (let j = 0; j < arr2[0].length; j++) {
-      let sum = 0;
+  for (let i = 0; i < splitS.length; i++) {
+    if (splitS[i] === "") {
+      answer.push("");
+    } else {
+      let str = splitS[i].split("");
+      let newStr = "";
 
-      for (let m = 0; m < arr2.length; m++) {
-        sum += arr1[i][m] * arr2[m][j];
+      for (let j = 0; j < str.length; j++) {
+        if (j === 0 && Number.isNaN(str[j]) === true) {
+          newStr += str[j];
+        } else if (j === 0 && Number.isNaN(str[j]) === false) {
+          newStr += str[j].toUpperCase();
+        } else {
+          newStr += str[j].toLowerCase();
+        }
       }
 
-      numArr.push(sum);
+      answer.push(newStr);
     }
-
-    answer.push(numArr);
   }
 
-  return answer;
+  return answer.join(" ");
 }
 
-console.log(solution(arr1, arr2));
+console.log(solution(s));

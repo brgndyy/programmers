@@ -1,36 +1,32 @@
-const s = "3people unFollowed me";
+const s = "3people  unFollowed me";
 
 function solution(s) {
-  var answer = [];
+  let answer = [];
 
   let splitS = s.split(" ");
 
   for (let i = 0; i < splitS.length; i++) {
-    let splitStr = splitS[i].split("");
-    let strArr = [];
-
-    if (Number.isInteger(Number(splitStr[0]))) {
-      strArr.push(splitStr[0]);
-
-      for (let j = 1; j < splitStr.length; j++) {
-        strArr.push(splitStr[i]);
-      }
-
-      answer.push(strArr.join(""));
+    if (splitS[i] === "") {
+      answer.push("");
     } else {
-      for (let k = 0; k < splitStr.length; k++) {
-        if (k === 0) {
-          strArr.push(splitStr[k].toUpperCase());
+      let str = splitS[i].split("");
+      let newStr = "";
+
+      for (let j = 0; j < str.length; j++) {
+        if (j === 0 && Number.isNaN(str[j]) === true) {
+          newStr += str[j];
+        } else if (j === 0 && Number.isNaN(str[j]) === false) {
+          newStr += str[j].toUpperCase();
         } else {
-          strArr.push(splitStr[k].toLowerCase());
+          newStr += str[j].toLowerCase();
         }
       }
 
-      answer.push(strArr.join(""));
+      answer.push(newStr);
     }
   }
 
-  return answer;
+  return answer.join(" ");
 }
 
 console.log(solution(s));
