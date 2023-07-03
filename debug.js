@@ -1,26 +1,33 @@
-const n = 3;
+const arr1 = [
+  [1, 4],
+  [3, 2],
+  [4, 1],
+];
+const arr2 = [
+  [3, 3],
+  [3, 3],
+];
 
-function solution(n) {
-  const answer = [];
+function solution(arr1, arr2) {
+  let answer = [];
 
-  function hanoi(n, from, to, by) {
-    if (n === 1) {
-      answer.push([from, to]);
+  for (let i = 0; i < arr1.length; i++) {
+    let numArr = [];
+
+    for (let j = 0; j < arr2[0].length; j++) {
+      let sum = 0;
+
+      for (let m = 0; m < arr2.length; m++) {
+        sum += arr1[i][m] * arr2[m][j];
+      }
+
+      numArr.push(sum);
     }
 
-    hanoi(n - 1, from, by, to);
-    answer.push([from, to]);
-    hanoi(n - 1, by, to, from);
+    answer.push(numArr);
   }
-
-  hanoi(n, 1, 3, 2);
 
   return answer;
 }
 
-console.log(solution(n));
-
-// hanoi(2, 1, 3, 2);
-// hano(1, 1, 2, 3) => n이 1이기 때문에 answer.push([1, 2]) 후 스택에서 사리짐
-// 그 후 1번 주석 라인에 있던 hanoi(2, 1, 3, 2)의 1 3 이 answer.push([1, 3]) 됨
-// 13번라인 hanoi 함수가 실행되어 hanoi(1, 2, 3, 1)이 실행되고 n이 1이므로 answer에 [2, 3]이 push
+console.log(solution(arr1, arr2));
