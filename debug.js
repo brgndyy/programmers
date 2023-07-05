@@ -1,32 +1,41 @@
-const s = "3people  unFollowed me";
+const n = 4;
 
-function solution(s) {
-  let answer = [];
+function solution(n) {
+  let answer = 0;
 
-  let splitS = s.split(" ");
+  function isValid(board, row) {
+    for (let i = 1; i < row; i++) {
+      if (board[i] === board[row]) {
+        return false;
+      }
+      if (Math.abs(board[i] - board[row]) === Math.abs(i - row)) {
+        return false;
+      }
+    }
 
-  for (let i = 0; i < splitS.length; i++) {
-    if (splitS[i] === "") {
-      answer.push("");
+    return true;
+  }
+
+  function dfs(board, row) {
+    if (n === row) {
+      answer++;
     } else {
-      let str = splitS[i].split("");
-      let newStr = "";
-
-      for (let j = 0; j < str.length; j++) {
-        if (j === 0 && Number.isNaN(str[j]) === true) {
-          newStr += str[j];
-        } else if (j === 0 && Number.isNaN(str[j]) === false) {
-          newStr += str[j].toUpperCase();
-        } else {
-          newStr += str[j].toLowerCase();
+      for (let i = 1; i <= n; i++) {
+        board[row + 1] = i;
+        if (isValid(board, row + 1)) {
+          dfs(board, row + 1);
         }
       }
-
-      answer.push(newStr);
     }
   }
 
-  return answer.join(" ");
+  for (let i = 1; i <= n; i++) {
+    const board = new Array(n + 1).fill(0);
+    board[1] = i;
+    dfs(board, 1);
+  }
+
+  return answer;
 }
 
-console.log(solution(s));
+console.log(solution(n));
