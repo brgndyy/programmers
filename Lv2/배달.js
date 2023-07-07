@@ -17,8 +17,9 @@ function solution(N, road, K) {
   // 또한 도시 번호는 1부터 시작하므로 N+1을 해주어서 도시번호를 직관적으로 맞춤
   const delTime = Array(N + 1).fill(500000);
   const queue = [];
+  // 각 도시가 갈수 있는 다른 도시들, 그리고 이동 시간을 담은 객체
   const roads = Array.from({ length: N + 1 }, () => []);
-  // 도로 연결 정보 이차원 배열에 저장
+  // 도로 연결 정보 양 방향 그래프로 만들어주기
   road.forEach(([v1, v2, t]) => {
     roads[v1].push({ to: v2, time: t });
     roads[v2].push({ to: v1, time: t });
@@ -32,6 +33,8 @@ function solution(N, road, K) {
     let { to, time } = queue.shift();
 
     roads[to].forEach((next) => {
+      // 현재 위치에서 다음 위치까지 가는 시간(delTime[to] + next.time)이
+      // 기존에 알고 있던 최소 시간 (delTime[next.to])보다 작은 경우
       if (delTime[next.to] > delTime[to] + next.time) {
         delTime[next.to] = delTime[to] + next.time;
         queue.push(next);
