@@ -1,70 +1,32 @@
-const dartResult = "1S2D*3T";
+const str1 = "FRENCH";
+const str2 = "france";
 
-function solution(dartResult) {
-  var answer = 0;
-  let scoreArr = [];
-
-  let num = 0;
-
-  let splitResult = dartResult.split("");
-
-  for (let i = 0; i < splitResult.length; i++) {
-    // 숫자형으로 바꿨을때 숫자가 아니고 문자열일때
-
-    if (Number.isNaN(Number(splitResult[i]))) {
-      if (splitResult[i] === "S") {
-        if (splitResult[i + 1] === "*") {
-          scoreArr[scoreArr.length - 2] *= 2;
-          scoreArr.push(num * 2);
-          i++;
-        } else if (splitResult[i + 1] === "#") {
-          scoreArr.push(num * -1);
-          i++;
-        } else {
-          scoreArr.push(num);
-        }
-      } else if (splitResult[i] === "D") {
-        if (splitResult[i + 1] === "*") {
-          scoreArr[scoreArr.length - 2] *= 2;
-          num = num * num * 2;
-          scoreArr.push(num);
-          i++;
-        } else if (splitResult[i + 1] === "#") {
-          num = num * num * -1;
-          scoreArr.push(num);
-          i++;
-        } else {
-          num = num * num;
-          scoreArr.push(num);
-        }
-      } else if (splitResult[i] === "T") {
-        if (splitResult[i + 1] === "*") {
-          scoreArr[scoreArr.length - 2] *= 2;
-          num = num * num * num * 2;
-          scoreArr.push(num);
-          i++;
-        } else if (splitResult[i + 1] === "#") {
-          num = num * num * num * -1;
-          scoreArr.push(num);
-          i++;
-        } else {
-          num = num * num * num;
-          scoreArr.push(num);
-        }
-      }
-
-      num = 0;
-    } else {
-      if (splitResult[i] === "1" && splitResult[i + 1] === "0") {
-        num += 10;
-        i++;
-      } else {
-        num += Number(splitResult[i]);
+function solution(str1, str2) {
+  function explode(text) {
+    const result = [];
+    for (let i = 0; i < text.length - 1; i++) {
+      const node = text.substring(i, i + 2);
+      if (node.match(/[A-Za-z]{2}/)) {
+        result.push(node.toLowerCase());
       }
     }
+    return result;
   }
 
-  return scoreArr.reduce((a, b) => a + b, 0);
+  const arr1 = explode(str1);
+  const arr2 = explode(str2);
+  const set = new Set([...arr1, ...arr2]);
+  let intersection = 0;
+  let union = 0;
+
+  set.forEach((item) => {
+    const has1 = arr1.filter((x) => x === item).length;
+    const has2 = arr2.filter((x) => x === item).length;
+    intersection += Math.min(has1, has2);
+    union += Math.max(has1, has2);
+  });
+
+  return union === 0 ? 65536 : Math.floor((intersection / union) * 65536);
 }
 
-console.log(solution(dartResult));
+console.log(solution(str1, str2));
