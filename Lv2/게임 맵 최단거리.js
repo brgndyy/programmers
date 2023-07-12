@@ -7,8 +7,6 @@ const maps = [
 ];
 
 function solution(maps) {
-  var answer = 0;
-
   // 시작점, 움직인 횟수
   let movePos = [0, 0, 0];
 
