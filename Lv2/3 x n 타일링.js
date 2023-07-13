@@ -1,6 +1,10 @@
+const n = 6;
+
 function solution(n) {
+  // 3 x 0  , 3 x 2 , 3 x 4 로 채울수 있는 갯수
   const dp = [0, 3, 11];
   const idx = Math.floor(n / 2);
+  const MOD = 1000000007;
 
   if (n % 2 !== 0) {
     return 0;
@@ -21,3 +25,5 @@ function solution(n) {
 
   return dp[idx];
 }
+
+console.log(solution(n));
