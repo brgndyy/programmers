@@ -1,30 +1,22 @@
-const board = [
-  [0, 1, 1, 1],
-  [1, 1, 1, 1],
-  [1, 1, 1, 1],
-  [0, 0, 1, 0],
-];
+function findLongestSubstring(str) {
+  let strMap = new Map();
 
-function solution(board) {
-  let answer = 0;
+  let maxLen = 0;
 
-  let n = board.length;
-  let m = board[0].length;
+  for (let i = 0; i < str.length; i++) {
+    strMap.set(str[i], strMap.get(str[i]) + 1 || 1);
+    let p2 = i + 1;
 
-  for (let i = 1; i < n; i++) {
-    for (let j = 1; j < m; j++) {
-      if (board[i][j] > 0) {
-        let minNum =
-          Math.min(board[i - 1][j], board[i - 1][j - 1], board[i][j - 1]) + 1;
-
-        board[i][j] = minNum;
-
-        answer = Math.max(answer, board[i][j]);
-      }
+    while (strMap.get(str[p2]) !== 1 && p2 < str.length) {
+      strMap.set(str[p2], strMap.get(str[p2]) + 1 || 1);
+      p2++;
     }
+
+    maxLen = Math.max(maxLen, strMap.size);
+    strMap.clear();
   }
 
-  return board;
+  return maxLen;
 }
 
-console.log(solution(board));
+console.log(findLongestSubstring("thisishowwedoit"));

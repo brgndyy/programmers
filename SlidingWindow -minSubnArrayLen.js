@@ -20,11 +20,11 @@ function minSubArrayLen(arr, target) {
   let windowSum = 0;
   let windowStart = 0;
 
-  for (let windowEnd = 0; windowEnd < arr.length; windowEnd++) {
-    windowSum += arr[windowEnd];
+  for (let i = 0; i < arr.length; i++) {
+    windowSum += arr[i];
 
     while (windowSum >= target) {
-      minLength = Math.min(minLength, windowEnd - windowStart + 1);
+      minLength = Math.min(minLength, i - windowStart + 1);
       windowSum -= arr[windowStart];
       windowStart++;
     }
@@ -36,3 +36,5 @@ function minSubArrayLen(arr, target) {
     return minLength;
   }
 }
+
+console.log(minSubArrayLen([1, 4, 16, 22, 5, 7, 8, 9, 10], 55));
