@@ -1,13 +1,23 @@
 function solution(begin, end) {
-  let arr = Array(end - begin + 2).fill(0);
-  let maxIndex = Math.floor((end - begin + 1) / 2);
+  const arr = new Array(end - begin + 1).fill(0);
 
-  for (let i = 1; i <= maxIndex; i++) {
-    for (let j = i * 2; j < arr.length; j += i) {
-      arr[j] = i;
-    }
+  for (let i = begin; i <= end; i++) {
+    arr[i - begin] = getMaxDivisor(i);
   }
 
-  arr.shift();
+  if (begin === 1) arr[0] = 0;
+
   return arr;
 }
+
+// 최대 약수를 구하는 함수
+const getMaxDivisor = (n) => {
+  for (let i = 2; i <= Math.sqrt(n); i++) {
+    if (n % i === 0 && n / i <= 1e7) {
+      return n / i;
+    }
+  }
+  return 1;
+};
+
+console.log(solution(1, 10));

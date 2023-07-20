@@ -1,22 +1,22 @@
-function findLongestSubstring(str) {
-  let strMap = new Map();
+function solution(begin, end) {
+  const arr = new Array(end - begin + 1).fill(0);
 
-  let maxLen = 0;
-
-  for (let i = 0; i < str.length; i++) {
-    strMap.set(str[i], strMap.get(str[i]) + 1 || 1);
-    let p2 = i + 1;
-
-    while (strMap.get(str[p2]) !== 1 && p2 < str.length) {
-      strMap.set(str[p2], strMap.get(str[p2]) + 1 || 1);
-      p2++;
-    }
-
-    maxLen = Math.max(maxLen, strMap.size);
-    strMap.clear();
+  for (let i = begin; i <= end; i++) {
+    arr[i - begin] = getMaxDivisor(i);
   }
 
-  return maxLen;
+  if (begin === 1) arr[0] = 0;
+
+  return arr;
 }
 
-console.log(findLongestSubstring("thisishowwedoit"));
+const getMaxDivisor = (n) => {
+  for (let i = 2; i <= Math.sqrt(n); i++) {
+    if (n % i === 0 && n / i <= 1e7) {
+      return n / i;
+    }
+  }
+  return 1;
+};
+
+console.log(solution(3, 10));
