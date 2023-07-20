@@ -1,22 +1,39 @@
-function solution(begin, end) {
-  const arr = new Array(end - begin + 1).fill(0);
+function solution(n, k) {
+  const answer = [];
+  // 배열 만들어 주기
+  const arr = Array.from({ length: n }, (_, index) => index + 1);
 
-  for (let i = begin; i <= end; i++) {
-    arr[i - begin] = getMaxDivisor(i);
+  let nth = k - 1;
+
+  while (arr.length) {
+    if (nth === 0) {
+      answer.push(...arr);
+      break;
+    }
+
+    // 맨 앞 숫자가 바뀌는 주기의 숫자, n이 5일때 24개의 주기로 앞자리수가 변한다.
+    const fact = factorial(arr.length - 1);
+
+    // 4
+    const index = Math.floor(nth / fact);
+
+    // 현재 순열에서 얼마만큼의 순번이 떨어져있는가
+    // 13
+    nth = nth % fact;
+
+    answer.push(arr[index]);
+    arr.splice(index, 1);
   }
 
-  if (begin === 1) arr[0] = 0;
-
-  return arr;
+  return answer;
 }
 
-const getMaxDivisor = (n) => {
-  for (let i = 2; i <= Math.sqrt(n); i++) {
-    if (n % i === 0 && n / i <= 1e7) {
-      return n / i;
-    }
+const factorial = (n) => {
+  let res = 1;
+  for (let i = 2; i <= n; i++) {
+    res *= i;
   }
-  return 1;
+  return res;
 };
 
-console.log(solution(3, 10));
+console.log(solution(5, 110));
