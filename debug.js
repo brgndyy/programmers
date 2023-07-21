@@ -1,39 +1,21 @@
-function solution(n, k) {
-  const answer = [];
-  // 배열 만들어 주기
-  const arr = Array.from({ length: n }, (_, index) => index + 1);
+function solution(n) {
+  let answer = [];
 
-  let nth = k - 1;
-
-  while (arr.length) {
-    if (nth === 0) {
-      answer.push(...arr);
-      break;
+  function hanoi(n, from, to, by) {
+    if (n === 1) {
+      answer.push([from, to]);
+      return;
     }
 
-    // 맨 앞 숫자가 바뀌는 주기의 숫자, n이 5일때 24개의 주기로 앞자리수가 변한다.
-    const fact = factorial(arr.length - 1);
+    hanoi(n - 1, from, by, to);
+    answer.push([from, to]);
 
-    // 4
-    const index = Math.floor(nth / fact);
-
-    // 현재 순열에서 얼마만큼의 순번이 떨어져있는가
-    // 13
-    nth = nth % fact;
-
-    answer.push(arr[index]);
-    arr.splice(index, 1);
+    hanoi(n - 1, by, to, from);
   }
+
+  hanoi(n, 1, 3, 2);
 
   return answer;
 }
 
-const factorial = (n) => {
-  let res = 1;
-  for (let i = 2; i <= n; i++) {
-    res *= i;
-  }
-  return res;
-};
-
-console.log(solution(5, 110));
+console.log(solution(2));

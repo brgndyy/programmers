@@ -1,31 +1,41 @@
 function solution(n, k) {
-  const answer = [];
-  const arr = new Array(n).fill(1);
-  for (let i = 1; i < n; i++) arr[i] = arr[i - 1] + 1;
+  const arr = Array.from({ length: n }, (_, index) => index + 1);
 
-  let nth = k - 1;
+  let answer = [];
+
+  let totalIndex = k - 1;
 
   while (arr.length) {
-    if (nth === 0) {
+    if (totalIndex === 0) {
       answer.push(...arr);
       break;
     }
 
-    const fact = factorial(arr.length - 1);
-    const index = (nth / fact) >> 0;
-    nth = nth % fact;
+    // 바뀌는 주기
+    let numPeriod = factorial(arr.length - 1);
 
-    answer.push(arr[index]);
-    arr.splice(index, 1);
+    // 주기를 나눈 몫으로 어느 그룹에 속해있는지 알수 있음
+    let groupIndex = Math.floor(totalIndex / numPeriod);
+
+    // 다음 순환에서 계산한 k 업데이트
+    totalIndex = totalIndex % numPeriod;
+
+    answer.push(arr[groupIndex]);
+
+    arr.splice(groupIndex, 1);
+  }
+
+  function factorial(n) {
+    let res = 1;
+
+    for (let i = 1; i <= n; i++) {
+      res *= i;
+    }
+
+    return res;
   }
 
   return answer;
 }
 
-const factorial = (n) => {
-  let res = 1;
-  for (let i = 2; i <= n; i++) res *= i;
-  return res;
-};
-
-console.log(solution(3, 5));
+console.log(solution(5, 110));
