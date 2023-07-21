@@ -26,13 +26,11 @@ function solution(n, k) {
   }
 
   function factorial(n) {
-    let res = 1;
-
-    for (let i = 1; i <= n; i++) {
-      res *= i;
+    if (n === 1) {
+      return 1;
     }
 
-    return res;
+    return n * factorial(n - 1);
   }
 
   return answer;
