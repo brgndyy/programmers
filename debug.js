@@ -1,39 +1,37 @@
-function solution(n, k) {
-  const arr = Array.from({ length: n }, (_, index) => index + 1);
-
+const arr1 = [
+  [1, 4],
+  [3, 2],
+  [4, 1],
+];
+const arr2 = [
+  [3, 3],
+  [3, 3],
+];
+function solution(arr1, arr2) {
   let answer = [];
 
-  let totalIndex = k - 1;
+  for (let i = 0; i < arr1.length; i++) {
+    let numArr = [];
+    for (let j = 0; j < arr2[0].length; j++) {
+      let sum = 0;
 
-  while (arr.length) {
-    if (totalIndex === 0) {
-      answer.push(...arr);
-      break;
+      for (let m = 0; m < arr2.length; m++) {
+        sum += arr1[i][m] * arr2[m][j];
+      }
+
+      numArr.push(sum);
     }
 
-    // 바뀌는 주기
-    let numPeriod = factorial(arr.length - 1);
-
-    // 주기를 나눈 몫으로 어느 그룹에 속해있는지 알수 있음
-    let groupIndex = Math.floor(totalIndex / numPeriod);
-
-    // 다음 순환에서 계산한 k 업데이트
-    totalIndex = totalIndex % numPeriod;
-
-    answer.push(arr[groupIndex]);
-
-    arr.splice(groupIndex, 1);
-  }
-
-  function factorial(n) {
-    if (n === 1) {
-      return 1;
-    }
-
-    return n * factorial(n - 1);
+    answer.push(numArr);
   }
 
   return answer;
 }
 
-console.log(solution(5, 110));
+console.log(solution(arr1, arr2));
+
+00;
+10;
+
+01;
+11;
