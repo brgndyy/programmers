@@ -1,5 +1,3 @@
-const n = 4;
-
 function solution(n) {
   let answer = 0;
 
@@ -8,19 +6,22 @@ function solution(n) {
     const board = new Array(n + 1).fill(0);
 
     // 체스판의 첫번째 세로라인 중 i칸에 퀸을 배치
-    // 첫번째 열에 i번째 행에 퀸이 있다는 뜻이다.
+    // 첫번째 행, i번째 열에 퀸이 있다는 뜻이다.
     board[1] = i;
 
-    // 배치가 완료된 체스판과 현재 세로라인인 1을 dfs함수에 전달
+    // 배치가 완료된 체스판과 현재 행인 1을 dfs함수에 전달
     dfs(board, 1);
   }
 
-  // row는 현재 화인하고 있는 열
+  // row는 현재 확인하고 있는 행
   function dfs(board, row) {
     if (n === row) {
       answer++;
     } else {
       for (let i = 1; i <= n; i++) {
+        board[row + 1] = i; // 다음 행에 퀸 배치 한후에
+        // 그 행에 퀸을 놓는건이 맞는 것인지 판단
+        // 맞다면 dfs함수 다시
         if (isValid(board, row + 1)) {
           dfs(board, row + 1);
         }
@@ -28,10 +29,12 @@ function solution(n) {
     }
   }
 
+  // row는 행을 나타내지만, board[row]는 열을 나타낸다.
+
   function isValid(board, row) {
     // 지금까지 놓인 퀸들과 충돌하는지 안하는지 판단하기 위해서 반복문
     for (let i = 1; i < row; i++) {
-      // 같은 라인에 있는 경우에는 false
+      // 같은 열에 있는 경우에는 false
       if (board[i] === board[row]) {
         return false;
       }
@@ -47,4 +50,4 @@ function solution(n) {
   return answer;
 }
 
-console.log(solution(n));
+console.log(solution(4));
