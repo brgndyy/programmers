@@ -1,44 +1,45 @@
-function solution(n) {
-  let answer = 0;
+const N = 5;
 
-  for (let i = 1; i <= n; i++) {
-    let board = Array(n + 1).fill(0);
+const road = [
+  [1, 2, 1],
+  [2, 3, 3],
+  [5, 2, 2],
+  [1, 4, 2],
+  [5, 3, 1],
+  [5, 4, 2],
+];
 
-    board[1] = i;
+const K = 3;
 
-    dfs(board, 1);
+function solution(N, road, K) {
+  const delTime = Array(N + 1).fill(50000);
+
+  let roads = Array.from({ length: N + 1 }, () => []);
+
+  road.forEach(([from, to, time]) => {
+    roads[from].push({ to: to, time: time });
+    roads[to].push({ to: from, time: time });
+  });
+
+  delTime[1] = 0;
+
+  let queue = [];
+
+  queue.push({ to: 1, time: 0 });
+
+  while (queue.length) {
+    let { to, time } = queue.shift();
+
+    roads[to].forEach((next) => {
+      if (delTime[next.to] > delTime[to] + next.time) {
+        delTime[next.to] = delTime[to] + next.time;
+
+        queue.push(next);
+      }
+    });
   }
 
-  function dfs(board, row) {
-    // 배치가 완료가 됐다면
-    if (n === row) {
-      answer++;
-    } else {
-      for (let i = 1; i <= n; i++) {
-        board[row + 1] = i;
-
-        if (isValid(board, row + 1)) {
-          dfs(board, row + 1);
-        }
-      }
-    }
-  }
-
-  function isValid(board, row) {
-    for (let i = 1; i < row; i++) {
-      if (board[i] === board[row]) {
-        return false;
-      }
-
-      if (Math.abs(board[i] - board[row]) === Math.abs(i - row)) {
-        return false;
-      }
-    }
-
-    return true;
-  }
-
-  return answer;
+  return delTime;
 }
 
-console.log(solution(4));
+console.log(solution(N, road, K));

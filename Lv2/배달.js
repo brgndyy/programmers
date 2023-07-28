@@ -1,3 +1,5 @@
+// 다 익스트라
+
 const N = 5;
 
 const road = [
@@ -21,7 +23,10 @@ function solution(N, road, K) {
   const roads = Array.from({ length: N + 1 }, () => []);
   // 도로 연결 정보 양 방향 그래프로 만들어주기
   road.forEach(([v1, v2, t]) => {
+    // v1 마을에서 v2 마을까지 걸리는 t 시간
     roads[v1].push({ to: v2, time: t });
+
+    // 양방향이므로 v2 마을에서 v1 마을까지 걸리는 t 시간
     roads[v2].push({ to: v1, time: t });
   });
 
@@ -29,6 +34,12 @@ function solution(N, road, K) {
   delTime[1] = 0;
   queue.push({ to: 1, time: 0 });
 
+  // 최단 경로를 찾기 위해서 while 문을 사용해야함
+  // 예를 들어서 1번 도시에서 2번 도시로 넘어가는데 5시간이 걸리고
+  // 1번 도시에서 3번 도시로 가는데 3의 비용이 들고 3번 도시에서 2번 도시로 가는데 1시간이 걸린다면
+  // 1번에서 2번도시로 바로 가는거보다 1번도시 -> 3번도시 -> 2번도시로 가는게 더 최단거리가 된다.
+  // 예를들어 현재 알고 있는 2번까지의 최소시간 delTime[2]가 1번도시를 통해 2번 도시로 가는 시간보다 크다면
+  // 2번까지 가는 최단 시간은 업데이트가 되고 queue 에 push된다.
   while (queue.length) {
     let { to, time } = queue.shift();
 
