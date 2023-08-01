@@ -28,12 +28,24 @@ function solution(m, n, board) {
     }
 
     founded.forEach((arr) => {
+      if (gameBoard[arr[0]][arr[1]] !== 0) {
+        answer++;
+      }
+      if (gameBoard[arr[0]][arr[1] + 1] !== 0) {
+        answer++;
+      }
+      if (gameBoard[arr[0] + 1][arr[1]] !== 0) {
+        answer++;
+      }
+
+      if (gameBoard[arr[0] + 1][arr[1] + 1]) {
+        answer++;
+      }
+
       gameBoard[arr[0]][arr[1]] = 0;
       gameBoard[arr[0]][arr[1] + 1] = 0;
       gameBoard[arr[0] + 1][arr[1]] = 0;
       gameBoard[arr[0] + 1][arr[1] + 1] = 0;
-
-      answer += 4;
     });
 
     for (let i = 0; i < n; i++) {
