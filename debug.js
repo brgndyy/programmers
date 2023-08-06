@@ -1,71 +1,48 @@
-const m = 4;
-const n = 5;
-const board = ["CCBDE", "AAADE", "AAABF", "CCBBF"];
+const maps = [
+  [1, 0, 1, 1, 1],
+  [1, 0, 1, 0, 1],
+  [1, 0, 1, 1, 1],
+  [1, 1, 1, 0, 1],
+  [0, 0, 0, 0, 1],
+];
 
-function solution(m, n, board) {
-  let gameBoard = board.map((str) => str.split(""));
+function solution(maps) {
+  let n = maps.length;
+  let m = maps[0].length;
+
+  let dir = [
+    [-1, 0],
+    [0, 1],
+    [1, 0],
+    [0, -1],
+  ];
 
   let answer = 0;
 
-  while (true) {
-    let founded = [];
+  let queue = [];
 
-    for (let i = 0; i < m - 1; i++) {
-      for (let j = 0; j < n - 1; j++) {
-        if (
-          gameBoard[i][j] !== 0 &&
-          gameBoard[i][j] === gameBoard[i][j + 1] &&
-          gameBoard[i][j] === gameBoard[i + 1][j] &&
-          gameBoard[i][j] === gameBoard[i + 1][j + 1]
-        ) {
-          founded.push([i, j]);
-        }
-      }
-    }
+  queue.push([0, 0, 1]);
 
-    if (!founded.length) {
+  while (queue.length) {
+    let [x, y, move] = queue.shift();
+
+    if (x === n - 1 && y === m - 1) {
+      return move;
       break;
     }
 
-    founded.forEach((arr) => {
-      let [x, y] = arr;
+    for (let i = 0; i < dir.length; i++) {
+      let nx = x + dir[i][0];
+      let ny = y + dir[i][1];
 
-      if (gameBoard[x][y] !== 0) {
-        answer++;
-      }
-      if (gameBoard[x][y + 1] !== 0) {
-        answer++;
-      }
-
-      if (gameBoard[x + 1][y] !== 0) {
-        answer++;
-      }
-      if (gameBoard[x + 1][y + 1] !== 0) {
-        answer++;
-      }
-
-      gameBoard[x][y] = 0;
-      gameBoard[x][y + 1] = 0;
-      gameBoard[x + 1][y] = 0;
-      gameBoard[x + 1][y + 1] = 0;
-    });
-
-    for (let i = 0; i < n; i++) {
-      for (let j = m - 1; j >= 0; j--) {
-        if (gameBoard[j][i] === 0) {
-          for (let k = j - 1; k >= 0; k--) {
-            if (gameBoard[k][i] !== 0) {
-              gameBoard[j][i] = gameBoard[k][i];
-              gameBoard[k][i] = 0;
-              break;
-            }
-          }
-        }
+      if (nx >= 0 && ny >= 0 && nx < n && ny < m && maps[nx][ny] === 1) {
+        queue.push([nx, ny, move + 1]);
+        maps[nx][ny] = 0;
       }
     }
   }
 
-  return answer;
+  return -1;
 }
 
-console.log(solution(m, n, board));
+console.log(solution(maps));
