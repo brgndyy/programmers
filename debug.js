@@ -1,48 +1,27 @@
-const maps = [
-  [1, 0, 1, 1, 1],
-  [1, 0, 1, 0, 1],
-  [1, 0, 1, 1, 1],
-  [1, 1, 1, 0, 1],
-  [0, 0, 0, 0, 1],
-];
+const n = 3;
 
-function solution(maps) {
-  let n = maps.length;
-  let m = maps[0].length;
+function solution(n) {
+  let answer = [];
 
-  let dir = [
-    [-1, 0],
-    [0, 1],
-    [1, 0],
-    [0, -1],
-  ];
+  while (n > 0) {
+    let some = n % 3;
 
-  let answer = 0;
-
-  let queue = [];
-
-  queue.push([0, 0, 1]);
-
-  while (queue.length) {
-    let [x, y, move] = queue.shift();
-
-    if (x === n - 1 && y === m - 1) {
-      return move;
-      break;
+    if (n % 3 === 0) {
+      n = n / 3 - 1;
+    } else {
+      n = Math.floor(n / 3);
     }
 
-    for (let i = 0; i < dir.length; i++) {
-      let nx = x + dir[i][0];
-      let ny = y + dir[i][1];
-
-      if (nx >= 0 && ny >= 0 && nx < n && ny < m && maps[nx][ny] === 1) {
-        queue.push([nx, ny, move + 1]);
-        maps[nx][ny] = 0;
-      }
+    if (some === 0) {
+      answer.unshift(4);
+    } else if (some === 1) {
+      answer.unshift(1);
+    } else if (some === 2) {
+      answer.unshift(2);
     }
   }
 
-  return -1;
+  return answer.join("");
 }
 
-console.log(solution(maps));
+console.log(solution(n));
