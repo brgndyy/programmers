@@ -1,27 +1,41 @@
-const n = 3;
+const board = [
+  [0, 1, 1, 1],
+  [1, 1, 1, 1],
+  [1, 1, 1, 1],
+  [0, 0, 1, 0],
+];
 
-function solution(n) {
-  let answer = [];
+function solution(board) {
+  let answer = 0;
 
-  while (n > 0) {
-    let some = n % 3;
+  let row = board.length;
+  let col = board[0].length;
 
-    if (n % 3 === 0) {
-      n = n / 3 - 1;
-    } else {
-      n = Math.floor(n / 3);
-    }
+  if (row <= 1 || col <= 1) {
+    return 1;
+  }
 
-    if (some === 0) {
-      answer.unshift(4);
-    } else if (some === 1) {
-      answer.unshift(1);
-    } else if (some === 2) {
-      answer.unshift(2);
+  for (let i = 1; i < row; i++) {
+    for (let j = 1; j < col; j++) {
+      if (board[i][j] === 0) {
+        continue;
+      } else {
+        let min = Math.min(
+          board[i - 1][j],
+          board[i - 1][j - 1],
+          board[i][j - 1]
+        );
+
+        board[i][j] = min + 1;
+
+        if (answer < board[i][j]) {
+          answer = board[i][j];
+        }
+      }
     }
   }
 
-  return answer.join("");
+  return answer * answer;
 }
 
-console.log(solution(n));
+console.log(solution(board));
