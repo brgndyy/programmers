@@ -3,6 +3,7 @@ function solution(n, k) {
 
   let answer = [];
 
+  // k번째이지만 인덱스이기 때문에 1을 빼주어야한다.
   let totalIndex = k - 1;
 
   while (arr.length) {
@@ -11,7 +12,7 @@ function solution(n, k) {
       break;
     }
 
-    // 바뀌는 주기
+    // 앞자리수 바뀌는 주기
     let numPeriod = factorial(arr.length - 1);
 
     // 주기를 나눈 몫으로 어느 그룹에 속해있는지 알수 있음
@@ -25,15 +26,15 @@ function solution(n, k) {
     arr.splice(groupIndex, 1);
   }
 
-  function factorial(n) {
-    if (n === 1) {
-      return 1;
-    }
+  return answer;
+}
 
-    return n * factorial(n - 1);
+function factorial(n) {
+  if (n === 1) {
+    return 1;
   }
 
-  return answer;
+  return n * factorial(n - 1);
 }
 
 console.log(solution(5, 110));

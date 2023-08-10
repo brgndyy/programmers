@@ -1,23 +1,38 @@
-const begin = 3;
-const end = 10;
+const n = 4;
+const k = 6;
 
-function solution(begin, end) {
-  let arr = Array.from({ length: end - begin + 1 }, (_, index) => 0);
+function solution(n, k) {
+  let arr = Array.from({ length: n }, (_, index) => index + 1);
+  let answer = [];
 
-  for (let i = begin; i <= end; i++) {
-    for (let j = 2; j <= Math.sqrt(i); j++) {
-      if (i % j === 0) {
-        arr[i - begin] = i / j;
-        break;
-      }
+  let totalIndex = k - 1;
+
+  while (arr.length) {
+    if (totalIndex === 0) {
+      answer.push(...arr);
+      break;
     }
 
-    if (arr[i - begin] === 0) {
-      arr[i - begin] = 1;
-    }
+    let numPeriod = factorial(arr.length - 1);
+
+    let groupIndex = Math.floor(totalIndex / numPeriod);
+
+    totalIndex = totalIndex % numPeriod;
+
+    answer.push(arr[groupIndex]);
+
+    arr.splice(groupIndex, 1);
   }
 
-  return arr;
+  function factorial(n) {
+    if (n === 1) {
+      return 1;
+    }
+
+    return n * factorial(n - 1);
+  }
+
+  return answer;
 }
 
-console.log(solution(begin, end));
+console.log(solution(n, k));
