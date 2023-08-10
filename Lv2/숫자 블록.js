@@ -1,23 +1,27 @@
+const begin = 1;
+const end = 10;
+
 function solution(begin, end) {
-  const arr = new Array(end - begin + 1).fill(0);
+  let arr = Array.from({ length: end - begin + 1 }, (_, index) => 0);
 
   for (let i = begin; i <= end; i++) {
-    arr[i - begin] = getMaxDivisor(i);
+    for (let j = 2; j <= Math.sqrt(i); j++) {
+      if (i % j === 0 && i / j <= 1e7) {
+        arr[i - begin] = i / j;
+        break; // 최대 약수를 찾았으므로 이 중첩 루프를 빠져나옴
+      }
+    }
+    // 약수가 없으면, 값을 1로 설정
+    if (arr[i - begin] === 0) {
+      arr[i - begin] = 1;
+    }
   }
 
-  if (begin === 1) arr[0] = 0;
+  if (begin === 1) {
+    arr[0] = 0;
+  } // 첫 번째 요소가 1일 때의 예외 처리
 
   return arr;
 }
 
-// 최대 약수를 구하는 함수
-const getMaxDivisor = (n) => {
-  for (let i = 2; i <= Math.sqrt(n); i++) {
-    if (n % i === 0 && n / i <= 1e7) {
-      return n / i;
-    }
-  }
-  return 1;
-};
-
-console.log(solution(1, 10));
+console.log(solution(begin, end));

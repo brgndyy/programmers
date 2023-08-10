@@ -1,41 +1,23 @@
-const board = [
-  [0, 1, 1, 1],
-  [1, 1, 1, 1],
-  [1, 1, 1, 1],
-  [0, 0, 1, 0],
-];
+const begin = 3;
+const end = 10;
 
-function solution(board) {
-  let answer = 0;
+function solution(begin, end) {
+  let arr = Array.from({ length: end - begin + 1 }, (_, index) => 0);
 
-  let row = board.length;
-  let col = board[0].length;
-
-  if (row <= 1 || col <= 1) {
-    return 1;
-  }
-
-  for (let i = 1; i < row; i++) {
-    for (let j = 1; j < col; j++) {
-      if (board[i][j] === 0) {
-        continue;
-      } else {
-        let min = Math.min(
-          board[i - 1][j],
-          board[i - 1][j - 1],
-          board[i][j - 1]
-        );
-
-        board[i][j] = min + 1;
-
-        if (answer < board[i][j]) {
-          answer = board[i][j];
-        }
+  for (let i = begin; i <= end; i++) {
+    for (let j = 2; j <= Math.sqrt(i); j++) {
+      if (i % j === 0) {
+        arr[i - begin] = i / j;
+        break;
       }
+    }
+
+    if (arr[i - begin] === 0) {
+      arr[i - begin] = 1;
     }
   }
 
-  return answer * answer;
+  return arr;
 }
 
-console.log(solution(board));
+console.log(solution(begin, end));
