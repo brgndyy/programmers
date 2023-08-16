@@ -1,38 +1,48 @@
-const n = 4;
-const k = 6;
+const maps = [
+  [1, 0, 1, 1, 1],
+  [1, 0, 1, 0, 1],
+  [1, 0, 1, 1, 1],
+  [1, 1, 1, 0, 1],
+  [0, 0, 0, 0, 1],
+];
 
-function solution(n, k) {
-  let arr = Array.from({ length: n }, (_, index) => index + 1);
-  let answer = [];
+function solution(maps) {
+  let n = maps.length;
+  let m = maps[0].length;
 
-  let totalIndex = k - 1;
+  let dir = [
+    [-1, 0],
+    [0, 1],
+    [1, 0],
+    [0, -1],
+  ];
 
-  while (arr.length) {
-    if (totalIndex === 0) {
-      answer.push(...arr);
-      break;
+  let moveAndPos = [0, 0, 1];
+
+  let queue = [];
+
+  queue.push(moveAndPos);
+
+  while (queue.length) {
+    let [x, y, move] = queue.shift();
+
+    if (x === n - 1 && y === m - 1) {
+      return move;
     }
 
-    let numPeriod = factorial(arr.length - 1);
+    for (let i = 0; i < 4; i++) {
+      let nx = x + dir[i][0];
+      let ny = y + dir[i][1];
 
-    let groupIndex = Math.floor(totalIndex / numPeriod);
+      if (nx >= 0 && ny >= 0 && nx < n && ny < m && maps[nx][ny] !== 0) {
+        maps[nx][ny] = 0;
 
-    totalIndex = totalIndex % numPeriod;
-
-    answer.push(arr[groupIndex]);
-
-    arr.splice(groupIndex, 1);
-  }
-
-  function factorial(n) {
-    if (n === 1) {
-      return 1;
+        queue.push([nx, ny, move + 1]);
+      }
     }
-
-    return n * factorial(n - 1);
   }
 
-  return answer;
+  return -1;
 }
 
-console.log(solution(n, k));
+console.log(solution(maps));
