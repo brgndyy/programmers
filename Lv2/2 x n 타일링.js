@@ -1,5 +1,15 @@
-function solution(n) {}
+function solution(n, memo = []) {
+  if (n < 2) {
+    return 1;
+  }
 
-console.log(solution(n));
+  if (memo[n] !== undefined) {
+    return memo[n];
+  }
 
-// 시작점은 Math.floor(n / 2) + n % 2
+  let res = solution(n - 1, memo) + solution(n - 2, memo);
+
+  memo[n] = res;
+
+  return res % 1000000007;
+}
