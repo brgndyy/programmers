@@ -1,16 +1,40 @@
-const n = 4;
+const board = [
+  [0, 1, 1, 1],
+  [1, 1, 1, 1],
+  [1, 1, 1, 1],
+  [0, 0, 1, 0],
+];
 
-function solution(n) {
-  let arr = Array(n + 1).fill(0);
+function solution(board) {
+  let maxLen = 0;
+  let m = board.length;
+  let n = board[0].length;
 
-  arr[0] = 1;
-  arr[1] = 1;
-
-  for (let i = 2; i <= n; i++) {
-    arr[i] = arr[i - 1] + (arr[i - 2] % 1000000007);
+  if (m <= 1 || n <= 1) {
+    return 1;
   }
 
-  return arr[n];
+  for (let i = 1; i < m; i++) {
+    for (let j = 1; j < n; j++) {
+      if (board[i][j] === 0) {
+        continue;
+      } else {
+        let minNum = Math.min(
+          board[i - 1][j],
+          board[i][j - 1],
+          board[i - 1][j - 1]
+        );
+
+        board[i][j] = minNum + 1;
+
+        if (board[i][j] > maxLen) {
+          maxLen = board[i][j];
+        }
+      }
+    }
+  }
+
+  return maxLen * maxLen;
 }
 
-console.log(solution(n));
+console.log(solution(board));
