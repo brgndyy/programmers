@@ -1,40 +1,38 @@
-const board = [
-  [0, 1, 1, 1],
-  [1, 1, 1, 1],
-  [1, 1, 1, 1],
-  [0, 0, 1, 0],
-];
+const n = 5;
+const k = 110;
 
-function solution(board) {
-  let maxLen = 0;
-  let m = board.length;
-  let n = board[0].length;
+function solution(n, k) {
+  let arr = Array.from({ length: n }, (_, index) => index + 1);
+  let answer = [];
 
-  if (m <= 1 || n <= 1) {
-    return 1;
-  }
+  let targetInedx = k - 1;
 
-  for (let i = 1; i < m; i++) {
-    for (let j = 1; j < n; j++) {
-      if (board[i][j] === 0) {
-        continue;
-      } else {
-        let minNum = Math.min(
-          board[i - 1][j],
-          board[i][j - 1],
-          board[i - 1][j - 1]
-        );
-
-        board[i][j] = minNum + 1;
-
-        if (board[i][j] > maxLen) {
-          maxLen = board[i][j];
-        }
-      }
+  while (arr.length) {
+    if (targetInedx === 0) {
+      answer.push(...arr);
+      break;
     }
+
+    let period = factorial(n - 1);
+
+    let groupIndex = Math.floor(targetInedx / period);
+
+    targetInedx = targetInedx % period;
+
+    answer.push(arr[groupIndex]);
+
+    arr.splice(groupIndex, 1);
   }
 
-  return maxLen * maxLen;
+  function factorial(n) {
+    if (n === 1) {
+      return 1;
+    }
+
+    return n * factorial(n - 1);
+  }
+
+  return answer;
 }
 
-console.log(solution(board));
+console.log(solution(n, k));
