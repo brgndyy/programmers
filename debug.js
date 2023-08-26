@@ -10,9 +10,7 @@ function solution(n) {
     }
 
     hanoi(n - 1, from, by, to);
-
     answer.push([from, to]);
-
     hanoi(n - 1, by, to, from);
   }
 
