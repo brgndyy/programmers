@@ -1,22 +1,24 @@
-const n = 2;
+const numbers = [1, 1, 1, 1, 1];
+const target = 3;
 
-function solution(n) {
-  let answer = [];
+function solution(numbers, target) {
+  var answer = 0;
 
-  function hanoi(n, from, to, by) {
-    if (n === 1) {
-      answer.push([from, to]);
-      return;
+  function dfs(num, count) {
+    if (count === numbers.length) {
+      if (num === target) {
+        answer++;
+        return;
+      }
     }
 
-    hanoi(n - 1, from, by, to);
-    answer.push([from, to]);
-    hanoi(n - 1, by, to, from);
+    dfs(num + numbers[count], count + 1);
+    dfs(num - numbers[count], count + 1);
   }
 
-  hanoi(n, 1, 3, 2);
+  dfs(0, 0);
 
   return answer;
 }
 
-console.log(solution(n));
+console.log(solution(numbers, target));
