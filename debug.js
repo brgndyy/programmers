@@ -1,53 +1,71 @@
-const m = 6;
-const n = 6;
-const board = ["TTTANT", "RRFACC", "RRRFCC", "TRRRAA", "TTMMMF", "TMMTTJ"];
+const m = 4;
+const n = 4;
+const board = ["CCBDE", "AAADE", "AAABF", "CCBBF"];
 
 function solution(m, n, board) {
   let answer = 0;
 
   let gameBoard = board.map((str) => str.split(""));
 
-  let copyBoard = gameBoard.map((row) => [...row]);
+  while (true) {
+    let founded = [];
 
-  let dir = [
-    [0, -1],
-    [-1, 0],
-    [-1, -1],
-  ];
-
-  // 4블록 있는 경우 0으로 바꾸어주기
-
-  for (let i = 1; i < m; i++) {
-    for (let j = 1; j < n; j++) {
-      let str = gameBoard[i][j];
-      let count = 0;
-
-      for (let z = 0; z < 3; z++) {
-        let nx = dir[z][0];
-        let ny = dir[z][1];
-
-        if (gameBoard[i + nx][j + ny] !== str) {
-          break;
-        } else if (gameBoard[i + nx][j + ny] === str) {
-          count++;
+    for (let i = 1; i < m; i++) {
+      for (let j = 1; j < n; j++) {
+        if (
+          gameBoard[i][j] !== 0 &&
+          gameBoard[i][j] === gameBoard[i][j - 1] &&
+          gameBoard[i][j] === gameBoard[i - 1][j] &&
+          gameBoard[i][j] === gameBoard[i - 1][j - 1]
+        ) {
+          founded.push([i, j]);
         }
       }
+    }
 
-      if (count === 3) {
-        answer += 4;
+    if (!founded.length) {
+      break;
+    }
 
-        copyBoard[i][j] = 0;
-        for (let k = 0; k < 3; k++) {
-          let nx = dir[k][0];
-          let ny = dir[k][1];
+    for (let i = 0; i < founded.length; i++) {
+      let x = founded[i][0];
+      let y = founded[i][1];
 
-          copyBoard[i + nx][j + ny] = 0;
+      if (gameBoard[x][y] !== 0) {
+        answer++;
+      }
+      if (gameBoard[x - 1][y] !== 0) {
+        answer++;
+      }
+      if (gameBoard[x][y - 1] !== 0) {
+        answer++;
+      }
+      if (gameBoard[x - 1][y - 1] !== 0) {
+        answer++;
+      }
+
+      gameBoard[x][y] = 0;
+      gameBoard[x - 1][y] = 0;
+      gameBoard[x][y - 1] = 0;
+      gameBoard[x - 1][y - 1] = 0;
+    }
+
+    for (let i = 0; i < n; i++) {
+      for (let j = m - 1; j >= 0; j--) {
+        if (gameBoard[j][i] === 0) {
+          for (let k = j - 1; k >= 0; k--) {
+            if (gameBoard[k][i] !== 0) {
+              gameBoard[j][i] = gameBoard[k][i];
+              gameBoard[k][i] = 0;
+              break;
+            }
+          }
         }
       }
     }
   }
 
-  return copyBoard;
+  return answer;
 }
 
 console.log(solution(m, n, board));
