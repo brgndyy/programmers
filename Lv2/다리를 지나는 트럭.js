@@ -22,5 +22,3 @@ function solution(bridge_length, weight, truck_weights) {
 
   return queue;
 }
-
-console.log(solution(bridge_length, weight, truck_weights));
