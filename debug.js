@@ -3,21 +3,27 @@ function solution(msg) {
   let answer = [];
 
   Array.from({ length: 26 }, (_, index) => {
-    let char = String.fromCharCode(index + 65);
-    alphabetMap.set(char, index + 1);
+    let str = String.fromCharCode(index + 65);
+
+    alphabetMap.set(str, index + 1);
   });
 
-  let w = "";
+  let word = "";
+
   for (let i = 0; i < msg.length; i++) {
-    w += msg[i];
-    if (!alphabetMap.get(w + msg[i + 1])) {
-      answer.push(alphabetMap.get(w));
-      alphabetMap.set(w + msg[i + 1], alphabetMap.size + 1);
-      w = "";
+    word += msg[i];
+
+    // 만약 글자 Map이 다음 문자열을 포함하고 있지 않다면
+    if (!alphabetMap.get(word + msg[i + 1])) {
+      answer.push(alphabetMap.get(word));
+
+      alphabetMap.set(word + msg[i + 1], alphabetMap.size + 1);
+
+      word = "";
     }
   }
 
   return answer;
 }
 
-console.log(solution("TOBEORNOTTOBEORTOBEORNOT"));
+console.log(solution("KAKAO"));
