@@ -1,33 +1,12 @@
-const readline = require("readline");
-
-function run(genFunc) {
-  const gen = genFunc();
-  function step(value) {
-    console.log("gen : ", gen);
-    const result = gen.next(value);
-    if (result.done) {
-      return;
-    }
-    rl.question(result.value, (input) => {
-      step(input);
-    });
-  }
-  step();
-}
-
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
-
 function* myGenerator() {
-  console.log("반갑습니다! 나이가 어떻게 되시나요?");
-  const age = yield "당신의 입력 : ";
-  console.log(`당신은 ${age}살 이군요!`);
-  console.log("당신의 거주지가 어떻게 되시나요?");
-  const location = yield "당신의 입력 : ";
-  console.log(`${location}! 좋은 곳이네요.`);
-  rl.close();
+  console.log("Start");
+  const a = yield "yield 1";
+  const b = yield "yield 2";
+  return "done";
 }
 
-run(myGenerator);
+const gen = myGenerator();
+
+console.log("처음 제너레이터 실행 :", gen.next()); // Start를 출력하고, { value: 'yield 1', done: false } 반환
+console.log("제너레이터 실행 : ", gen.next()); // a: 10을 출력하고, { value: 'yield 2', done: false } 반환
+// console.log(gen.next(20));  // b: 20을 출력하고, { value: 'done', done: true } 반환
