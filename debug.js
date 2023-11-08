@@ -26,3 +26,7 @@ console.log(obj.a); // { b: 1 }
 
 obj.a.b = 2;
 console.log(obj.a); // { b: 1 }
+
+obj.a.b.c = 1;
+
+console.log(obj.a.b.c);
