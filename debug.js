@@ -1,17 +1,18 @@
-function solution(n) {
-  let answer = 0;
+const land = [
+  [1, 2, 3, 5],
+  [5, 6, 7, 8],
+  [4, 3, 2, 1],
+];
 
-  // n이 0보다 클때까지 반복문을 돌린다.
-  while (n > 0) {
-    // 만약 n이 짝수라면
-    if (n % 2 === 0) {
-      // n은 반을 나눠주고
-      n /= 2;
-    } else {
-      n--;
-      answer++;
-    }
+function solution(land) {
+  for (let i = 1; i < land.length; i++) {
+    land[i][0] += Math.max(land[i - 1][1], land[i - 1][2], land[i - 1][3]);
+    land[i][1] += Math.max(land[i - 1][0], land[i - 1][2], land[i - 1][3]);
+    land[i][2] += Math.max(land[i - 1][0], land[i - 1][1], land[i - 1][3]);
+    land[i][3] += Math.max(land[i - 1][0], land[i - 1][1], land[i - 1][2]);
   }
 
-  return answer;
+  return Math.max(...land[land.length - 1]);
 }
+
+console.log(solution(land));
