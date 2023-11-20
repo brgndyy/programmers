@@ -8,7 +8,7 @@ function solution(bridge_length, weight, truck_weights) {
     // 다리에 트럭이 올라가있다면
     if (bridge.length > 0) {
       //  time - bridge[0].time은 해당 트럭이 다리위에 있었던 시간이다.
-      // 그 시간이 bride의 길이와 똑같다면 그 트럭은 다리위에서 내려와야하는 것이므로
+      // 그 시간이 bridge의 길이와 똑같다면 그 트럭은 다리위에서 내려와야하는 것이므로
       // 다리에서 해당 트럭의 무게를 빼준다.
       if (time - bridge[0].time === bridge_length) {
         let truck = bridge.shift();
