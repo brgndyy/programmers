@@ -1,32 +1,23 @@
-const str1 = "FRENCH";
-const str2 = "france";
+const land = [
+  [1, 2, 3, 5],
+  [5, 6, 7, 8],
+  [4, 3, 2, 1],
+];
 
-function solution(str1, str2) {
-  function explode(text) {
-    const result = [];
-    for (let i = 0; i < text.length - 1; i++) {
-      const node = text.substring(i, i + 2);
-      if (node.match(/[A-Za-z]{2}/)) {
-        result.push(node.toLowerCase());
-      }
-    }
-    return result;
+function solution(land) {
+  for (let i = 1; i < land.length; i++) {
+    land[i][0] += Math.max(land[i - 1][1], land[i - 1][2], land[i - 1][3]);
+
+    land[i][1] += Math.max(land[i - 1][0], land[i - 1][2], land[i - 1][3]);
+
+    land[i][2] += Math.max(land[i - 1][0], land[i - 1][1], land[i - 1][3]);
+
+    land[i][3] += Math.max(land[i - 1][0], land[i - 1][1], land[i - 1][2]);
   }
 
-  const arr1 = explode(str1);
-  const arr2 = explode(str2);
-  const set = new Set([...arr1, ...arr2]);
-  let intersection = 0;
-  let union = 0;
+  const answer = Math.max(...land[land.length - 1]);
 
-  set.forEach((item) => {
-    const has1 = arr1.filter((x) => x === item).length;
-    const has2 = arr2.filter((x) => x === item).length;
-    intersection += Math.min(has1, has2);
-    union += Math.max(has1, has2);
-  });
-
-  return union === 0 ? 65536 : Math.floor((intersection / union) * 65536);
+  return answer;
 }
 
-console.log(solution(str1, str2));
+console.log(solution(land));
