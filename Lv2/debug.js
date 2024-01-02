@@ -2,22 +2,26 @@ const begin = 1;
 const end = 10;
 
 function solution(begin, end) {
-  const totalArr = Array.from({ length: end - begin + 2 }, (_, index) => 0);
+  let arr = Array.from({ length: end - begin + 1 }, (_, index) => 0);
 
-  let beginIndex = begin;
-  const endIndex = end;
-
-  while (beginIndex < endIndex) {
-    for (let i = beginIndex * 2; i <= endIndex; i += beginIndex) {
-      totalArr[i] = beginIndex;
+  for (let i = begin; i <= end; i++) {
+    for (let j = 2; j <= Math.sqrt(i); j++) {
+      if (i % j === 0) {
+        arr[i - begin] = i / j;
+        break;
+      }
     }
 
-    beginIndex++;
+    if (arr[i - begin] === 0) {
+      arr[i - begin] = 1;
+    }
   }
 
-  totalArr.shift();
+  if (begin === 1) {
+    arr[0] = 0;
+  }
 
-  return totalArr;
+  return arr;
 }
 
 console.log(solution(begin, end));
