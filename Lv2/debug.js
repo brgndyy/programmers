@@ -1,23 +1,23 @@
-const land = [
-  [1, 2, 3, 5],
-  [5, 6, 7, 8],
-  [4, 3, 2, 1],
-];
+const begin = 1;
+const end = 10;
 
-function solution(land) {
-  for (let i = 1; i < land.length; i++) {
-    land[i][0] += Math.max(land[i - 1][1], land[i - 1][2], land[i - 1][3]);
+function solution(begin, end) {
+  const totalArr = Array.from({ length: end - begin + 2 }, (_, index) => 0);
 
-    land[i][1] += Math.max(land[i - 1][0], land[i - 1][2], land[i - 1][3]);
+  let beginIndex = begin;
+  const endIndex = end;
 
-    land[i][2] += Math.max(land[i - 1][0], land[i - 1][1], land[i - 1][3]);
+  while (beginIndex < endIndex) {
+    for (let i = beginIndex * 2; i <= endIndex; i += beginIndex) {
+      totalArr[i] = beginIndex;
+    }
 
-    land[i][3] += Math.max(land[i - 1][0], land[i - 1][1], land[i - 1][2]);
+    beginIndex++;
   }
 
-  const answer = Math.max(...land[land.length - 1]);
+  totalArr.shift();
 
-  return answer;
+  return totalArr;
 }
 
-console.log(solution(land));
+console.log(solution(begin, end));
