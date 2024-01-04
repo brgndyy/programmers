@@ -1,27 +1,18 @@
-const begin = 1;
-const end = 10;
+const n = 5000;
 
-function solution(begin, end) {
-  let arr = Array.from({ length: end - begin + 1 }, (_, index) => 0);
+function solution(n) {
+  let count = 0;
 
-  for (let i = begin; i <= end; i++) {
-    for (let j = 2; j <= Math.sqrt(i); j++) {
-      if (i % j === 0) {
-        arr[i - begin] = i / j;
-        break;
-      }
-    }
-
-    if (arr[i - begin] === 0) {
-      arr[i - begin] = 1;
+  while (n > 0) {
+    if (n % 2) {
+      count++;
+      n = Math.floor(n / 2);
+    } else {
+      n = n / 2;
     }
   }
 
-  if (begin === 1) {
-    arr[0] = 0;
-  }
-
-  return arr;
+  return count;
 }
 
-console.log(solution(begin, end));
+console.log(solution(n));
