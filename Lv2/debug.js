@@ -1,18 +1,44 @@
-const n = 5000;
+const n = 4;
 
-function solution(n) {
-  let count = 0;
+const k = 9;
 
-  while (n > 0) {
-    if (n % 2) {
-      count++;
-      n = Math.floor(n / 2);
-    } else {
-      n = n / 2;
+function solution(n, k) {
+  // n = 4 k = 8
+
+  function factorial(number) {
+    let totalNumber = 1;
+    while (number > 0) {
+      totalNumber *= number;
+      number--;
     }
+    return totalNumber;
   }
 
-  return count;
+  const numArr = Array.from({ length: n }, (_, index) => index + 1);
+
+  // 1 3 4
+
+  let answer = [];
+
+  while (numArr.length) {
+    let 앞자리바뀌는주기 = factorial(n - 1); //
+
+    let k가속한그룹맨앞자리 = Math.ceil(k / 앞자리바뀌는주기); //
+
+    // let 그앞의숫자들갯수 = Math.floor(k / 앞자리바뀌는주기) * 앞자리바뀌는주기;
+
+    let foundNumber = numArr[k가속한그룹맨앞자리 - 1];
+
+    const numForPush = numArr.splice(foundNumber - 1, 1)[0];
+
+    answer.push(numForPush);
+
+    n--;
+
+    // k -= 그앞의숫자들갯수;
+  }
+
+  return answer;
 }
 
-console.log(solution(n));
+console.log(solution(n, k));
