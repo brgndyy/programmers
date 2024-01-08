@@ -1,44 +1,61 @@
-const n = 4;
+const cacheSize = 5;
+const cities = ["a", "b", "c", "b", "a"];
 
-const k = 9;
+function solution(cacheSize, cities) {
+  const cacheArr = [];
 
-function solution(n, k) {
-  // n = 4 k = 8
+  const cacheHit = 1;
 
-  function factorial(number) {
-    let totalNumber = 1;
-    while (number > 0) {
-      totalNumber *= number;
-      number--;
+  const cacheMiss = 5;
+
+  let answer = 0;
+
+  if (cacheSize === 0) return cities.length * 5;
+
+  for (let i = 0; i < cities.length; i++) {
+    const city = cities[i].toLowerCase();
+
+    const isIncludedCityInCache = cacheArr.includes(city);
+
+    const isValidCacheArrLength = cacheArr.length < cacheSize;
+
+    // 캐시 사이즈가 아직 여유롭다면
+    if (isValidCacheArrLength) {
+      //캐시 안에 해당 도시가 존재하지 않는다면 (cacheMiss)
+      if (!isIncludedCityInCache) {
+        cacheArr.push(city);
+        answer += cacheMiss;
+      }
+      //   캐시 안에 해당 도시가 존재한다면 (cacheHit);
+      else {
+        const foundIndex = cacheArr.indexOf(city);
+        cacheArr.splice(foundIndex, 1);
+        cacheArr.push(city);
+        answer += cacheHit;
+      }
     }
-    return totalNumber;
-  }
+    // 캐시 사이즈가 여유롭지 않다면
+    else {
+      // 캐시 안에 이미 도시가 존재한다면
+      if (isIncludedCityInCache) {
+      }
 
-  const numArr = Array.from({ length: n }, (_, index) => index + 1);
-
-  // 1 3 4
-
-  let answer = [];
-
-  while (numArr.length) {
-    let 앞자리바뀌는주기 = factorial(n - 1); //
-
-    let k가속한그룹맨앞자리 = Math.ceil(k / 앞자리바뀌는주기); //
-
-    // let 그앞의숫자들갯수 = Math.floor(k / 앞자리바뀌는주기) * 앞자리바뀌는주기;
-
-    let foundNumber = numArr[k가속한그룹맨앞자리 - 1];
-
-    const numForPush = numArr.splice(foundNumber - 1, 1)[0];
-
-    answer.push(numForPush);
-
-    n--;
-
-    // k -= 그앞의숫자들갯수;
+      if (!isIncludedCityInCache) {
+        cacheArr.shift();
+        cacheArr.push(city);
+        answer += cacheMiss;
+      }
+      //   캐시 안에 해당 도시가 존재한다면 (cacheHit);
+      else {
+        const foundIndex = cacheArr.indexOf(city);
+        cacheArr.splice(cacheArr[foundIndex], 1);
+        cacheArr.push(city);
+        answer += cacheHit;
+      }
+    }
   }
 
   return answer;
 }
 
-console.log(solution(n, k));
+console.log(solution(cacheSize, cities));
