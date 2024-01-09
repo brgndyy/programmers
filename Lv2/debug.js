@@ -1,27 +1,16 @@
-const n = 16;
+const input = `(()()))`;
 
-const t = 16;
+const strArr = input.split("");
 
-const m = 2;
+const stack = [];
 
-const p = 2;
+for (let i = 0; i < strArr.length; i++) {
+  stack.push(strArr[i]);
 
-function solution(n, t, m, p) {
-  let totalStr = "";
-
-  let answer = "";
-
-  const 전체구해야할숫자갯수 = t * m;
-
-  for (let i = 0; i <= 전체구해야할숫자갯수; i++) {
-    totalStr += i.toString(n).toUpperCase();
+  if (stack[stack.length - 2] === "(" && stack[stack.length - 1] === ")") {
+    stack.pop();
+    stack.pop();
   }
-
-  for (let i = p - 1; i <= 전체구해야할숫자갯수; i += p) {
-    answer += totalStr[i];
-  }
-
-  return answer;
 }
 
-console.log(solution(n, t, m, p));
+console.log(stack);
