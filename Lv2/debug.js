@@ -1,18 +1,34 @@
-const input = `(A(BC)D)EF(G(H)(IJ)K)LM(N)`;
+const bridge_length = 100;
+const weight = 100;
+const truck_weights = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10];
 
-const strArr = input.split("");
+function solution(bridge_length, weight, truck_weights) {
+  let bridge = Array(bridge_length).fill(0);
 
-const stack = [];
+  let time = 0;
 
-for (let i = 0; i < strArr.length; i++) {
-  stack.push(strArr[i]);
+  while (bridge.length) {
+    bridge.shift();
 
-  if (stack[stack.length - 1] === ")") {
-    while (stack[stack.length - 1] !== "(") {
-      stack.pop();
+    if (truck_weights.length) {
+      const totalWeightOnBridge =
+        truck_weights[0] + bridge.reduce((a, b) => a + b, 0);
+
+      if (totalWeightOnBridge <= weight) {
+        bridge.push(truck_weights.shift());
+      } else {
+        bridge.push(0);
+      }
     }
-    stack.pop();
+
+    time++;
   }
+
+  return time;
 }
 
-console.log(stack.join(""));
+console.log(solution(bridge_length, weight, truck_weights));
+
+// 1. 시간은 무조건 늘어난다.
+
+// 2. 트럭위에 다리가 존재하며, 해당 트럭이 내려가야할 시간이라면 ?
